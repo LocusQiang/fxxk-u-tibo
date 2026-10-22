@@ -38,4 +38,25 @@ jobs:
         run: python package_release.py
       - name: Windows PowerShell lifecycle and task ownership checks
         shell: powershell
-        run: ./scripts/test-scripts.ps1
+        run: |
+          ./scripts/test-scripts.ps1
+          ./scripts/test-exe-autostart.ps1
+  executable:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.14'
+      - run: python -m pip install -r requirements-build.txt
+      - run: python build_exe.py
+      - run: python package_release.py
+      - name: Check bundled runtime without sending
+        shell: pwsh
+        run: |
+          $exe = (Get-ChildItem dist/*-windows-x64.exe).FullName
+          $process = Start-Process -FilePath $exe -ArgumentList '--doctor --output dist/ci-doctor.json' -PassThru -Wait
+          $report = Get-Content dist/ci-doctor.json -Raw | ConvertFrom-Json
+          $runtime = $report.checks | Where-Object { $_.check -in @('platform','python','tkinter','PIL','node','assets') }
+          if ($runtime.Count -ne 6 -or ($runtime | Where-Object status -ne 'ok')) { throw 'Bundled runtime check failed.' }
+          if ($report.messages_sent -ne 0) { throw 'Doctor must be read-only.' }

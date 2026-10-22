@@ -59,6 +59,6 @@ Do not turn a synthetic test, preview animation, or successful Doctor probe into
 
 The software uses MIT. Submit work you have the right to contribute under that license. For AI-generated images, describe their origin and license only rights you can grant; do not claim exclusive copyright in generated output. Preserve separate dependency notices.
 
-Pillow is installed separately into the environment and retains its own license. Python and Node.js are separately installed runtimes. The historical Kenney/Three.js assets and renderer are not included in the public distribution; do not reintroduce them without a separate review of scope and licensing.
+Source users install the dependencies separately; the EXE bundles them and preserves their licenses. To build it on Windows x64, install requirements-build.txt, run python build_exe.py, then python package_release.py. The build downloads and verifies the pinned official Node archive. Build artifacts stay under build/ and dist/. Check both the source allowlist and EXE contents before publication. The historical Kenney/Three.js assets and renderer are not included in the public distribution; do not reintroduce them without a separate review of scope and licensing.
 
 Release packages must be built from an explicit file allowlist. Exclude `.runtime/`, local virtual environments, caches, credentials, databases, session files, private diagnostics, and personal screenshots. Git ignore rules alone do not verify an archive's contents. Check the actual archive before publishing.

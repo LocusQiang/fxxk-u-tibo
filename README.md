@@ -10,7 +10,23 @@
 
 [![Windows tests](https://github.com/LocusQiang/fxxk-u-tibo/actions/workflows/test.yml/badge.svg)](https://github.com/LocusQiang/fxxk-u-tibo/actions/workflows/test.yml)
 
-**[Download v0.1.1 — Windows preview](https://github.com/LocusQiang/fxxk-u-tibo/releases/tag/v0.1.1)** · Source ZIP; Python and Node.js are installed separately.
+**[Download v0.2.0 — Windows x64 EXE](https://github.com/LocusQiang/fxxk-u-tibo/releases/tag/v0.2.0)** · Standalone EXE, source ZIP, licenses and SHA256 checksums.
+
+## Quick start with the EXE
+
+1. Download fxxk-u-tibo-0.2.0-windows-x64.exe into a permanent, writable folder. It includes Python and Node.js; no separate runtime installation is needed. The EXE is unsigned, so Windows may show an unknown-publisher prompt. No administrator rights are requested by the app.
+2. Double-click to open statistics and controls. This does not start sending. If Codex uses a custom data folder, choose **Codex folder…** before starting; the default is CODEX_HOME or your user profile's .codex directory.
+3. Read the continuation defaults below, then choose **Start retries**. Click the kitchen icon in the Windows system tray (possibly in the hidden-icons area), or a one-second retry toast, to return to statistics.
+4. Choose **Logon startup…** to enable automatic startup after signing into Windows and one-minute supervisor recovery. This may start monitoring within one minute. It is independent of how Codex is launched. **Stop** remains effective until Start or a reboot.
+
+Statistics show confirmed sends by local calendar date, 7/30/90-day trends, lifetime totals and unresolved sends. An unresolved send is never included in the confirmed count or automatically sent again. Daily conversation counts count distinct conversations with confirmed sends. Closing the statistics window keeps monitoring running. Preview does not send or increase statistics.
+
+The EXE stores private configuration and history in **.runtime next to the EXE**. Keep the EXE in its permanent folder once autostart is installed; remove autostart before moving it. One-file dependency extraction uses Windows temporary storage during execution. No analytics or statistics upload is performed.
+
+**Upgrading from source:** stop the old worker and disable its autostart first. Preserve its .runtime directory (especially actions.jsonl and baseline.json) and place the new EXE beside it, or launch with --data-dir pointing to that directory. Preserve the same Codex home. Never delete the journal to force a retry. Use the EXE's startup control to register the new executable. The source installation instructions below remain available for developers.
+
+Read-only packaged diagnostics: run the EXE with **--doctor --connect** while Codex is open. The private report is written to .runtime/doctor.json; review and redact paths before sharing it.
+
 
 An unofficial Windows companion for the **Codex desktop app**. When a conversation stops with a verified service-unavailable, HTTP 503, server-overload, or model-capacity error, it sends the literal Chinese message **`继续`** to that same conversation. A cute AI-generated kitchen utensil flies across the screen, accompanied by a stationary, one-second notification. There is no voice output.
 
@@ -22,10 +38,10 @@ This project is independent of OpenAI and is not an official or supported Codex 
 
 **Starting the watcher authorizes automatic continuation in the conversations it detects. Read these defaults before your first Start:**
 
-- It monitors local user conversations in the configured Codex home, **excluding archived and subagent conversations**. It is not limited to the currently visible chat. v0.1.x has no switch to include archived conversations.
+- It monitors local user conversations in the configured Codex home, **excluding archived and subagent conversations**. It is not limited to the currently visible chat. v0.2.x has no switch to include archived conversations.
 - **The first normal Start establishes a persistent baseline and skips failures already present at that time.** Automatic recovery applies only to new qualifying failures that appear afterward. Setup and Preview do not start monitoring. To resume an existing failed task, open that conversation and manually send `继续` once.
 - A continuation can consume Codex usage or quota and resume tools or other actions from the original task. It inherits that conversation's permissions and settings. It does **not** bypass approvals or grant extra permissions.
-- The sent text is always **`继续`** (meaning “continue”), including with English UI selected. It is not the English text `Continue` and is not configurable in v0.1.x.
+- The sent text is always **`继续`** (meaning “continue”), including with English UI selected. It is not the English text `Continue` and is not configurable in v0.2.x.
 - A failure already handled, or a send whose outcome is unknown, is not automatically sent again. Unknown runtime state or incompatible history structure blocks the submission. Sends to the same chat are spaced at least **30 seconds** apart. A later, distinct qualifying failure in that chat can trigger another continuation.
 - While Windows is locked, retries continue if the desktop app and local session remain available. Visual notifications are discarded and are not replayed after unlock. The tool cannot run while the PC is asleep or shut down.
 
@@ -33,7 +49,7 @@ Installation does not start the watcher or enable autostart. Use the explicit St
 
 **The public release differs from the earlier personal prototype:** it skips pre-existing failures on first normal Start, excludes archived conversations, and does not use legacy session-file scanning to trigger sends. Do not assume instructions or behavior from that prototype apply here.
 
-## Requirements and compatibility
+## Source requirements and compatibility
 
 | Component | Requirement | Evidence boundary |
 | --- | --- | --- |
@@ -43,11 +59,11 @@ Installation does not start the watcher or enable autostart. Use the explicit St
 | Node.js | **22+**, installed separately | Reported local version: **22.20**. A minimum version is not a claim that all later versions were tested. |
 | Pillow | **12.2.0** | Installed into the project's virtual environment during setup. |
 
-Codex CLI, the VS Code extension, macOS, and Linux are unsupported. Python and Node.js are not bundled. Use their official [Python for Windows](https://www.python.org/downloads/windows/) and [Node.js](https://nodejs.org/en/download) distributions; include Tcl/Tk support when installing Python.
+Codex CLI, the VS Code extension, macOS, and Linux are unsupported. The standalone EXE bundles its runtimes. For source installation, use the official [Python for Windows](https://www.python.org/downloads/windows/) and [Node.js](https://nodejs.org/en/download) distributions; include Tcl/Tk support when installing Python.
 
 The integration currently expects desktop inter-process communication (IPC) **snapshot v11**, **start-turn v2**, and compatible local databases **`state_5.sqlite`** and **`thread_history_1.sqlite`**. Both databases are required; a missing history database is a Doctor error. These are private implementation details, not a stable public API. Codex upgrades may break detection or sending. See the [compatibility matrix and upgrade procedure](docs/compatibility.md).
 
-## Install
+## Install from source
 
 For a ZIP downloaded on Windows, right-click the ZIP, select **Properties > Unblock**, and apply the change **before extracting** it (if the Unblock checkbox is shown). Extract into a writable folder. The launchers and autostart scripts use `RemoteSigned`; the `Bypass` option below applies only to the installer invocation. Do not change the global PowerShell execution policy. A source checkout can also be used.
 
@@ -154,13 +170,15 @@ Use synthetic examples for public issues and pull requests. Do not upload raw ru
 
 ## Validation status
 
+**v0.2.0:** local statistics, standalone EXE, read-only desktop connection, packaged animation, and packaged worker recovery checks passed. The actual EXE autostart task was registered and launched on the maintainer's PC. Physical reboot, real lock/unlock sending on this version, and another PC remain untested. See the [current validation record](docs/compatibility.md#v020-validation). The following v0.1.0 results are historical.
+
 The maintainer supplied a **single-machine local desktop baseline**: Windows 11 x64, Codex 26.1016.6573.0, Python 3.14.3, and Node.js 22.20. Desktop compatibility has not been validated on another PC.
 
 For the v0.1.0 candidate, the maintainer reports **48 Python tests, 16 Node tests, and 26 Windows PowerShell 5.1 checks passing locally**. Installation passed both in the public checkout and from a fresh allowlisted ZIP extracted under a nested path containing Chinese characters and spaces; package Demo launch also passed. English and Chinese visual smoke checks passed. Read-only Doctor connection and actual idle-snapshot parsing checks passed, with **zero real continuation messages sent**.
 
 **[GitHub Actions run 39750132929](https://github.com/LocusQiang/fxxk-u-tibo/actions/runs/39750132929) passed at revision `6a9037d`** across all four `windows-latest` jobs: Python 3.11, 3.12, 3.13, and 3.14 with Node.js 22. Each job passed 48 Python tests, 16 Node tests, PowerShell parsing, and package construction. That run predates the added PowerShell lifecycle test script; its 26-check result above is local evidence. The badge links to current workflow runs.
 
-Real sending, real lock/unlock behavior, scheduled-task registration, and reboot recovery have **not** been validated for the public build. Hosted synthetic tests do not establish real Codex behavior on a second computer. See [the validation record](docs/compatibility.md#release-validation-record) for measured results and scope.
+For that v0.1.0 candidate, real sending, real lock/unlock behavior, scheduled-task registration, and reboot recovery were **not** validated. v0.2.0 adds actual scheduled-task registration and launch checks as recorded above. Hosted synthetic tests do not establish real Codex behavior on a second computer. See [the historical validation record](docs/compatibility.md#release-validation-record) for measured results and scope.
 
 ## Contributing and license
 

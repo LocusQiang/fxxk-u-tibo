@@ -6,7 +6,7 @@ from pathlib import Path
 import zipfile
 
 ROOT = Path(__file__).resolve().parent
-VERSION = '0.1.1'
+VERSION = '0.2.0'
 FILES = '''
 .gitignore .gitattributes LICENSE README.md README.zh-CN.md CHANGELOG.md
 CONTRIBUTING.md SECURITY.md THIRD_PARTY_NOTICES.md requirements.txt
@@ -18,6 +18,8 @@ scripts/test-scripts.ps1
 test_monitor.py test_auto.py test_concurrency.py test_locking.py
 test_supervisor.py test_portability.py test_bridge.cjs test_release.py
 package_release.py
+app.py dashboard.py retry_stats.py startup.py build_exe.py requirements-build.txt
+test_stats.py scripts/exe-autostart.ps1 scripts/test-exe-autostart.ps1
 docs/compatibility.md docs/kitchen-contact-sheet.png docs/slogan-translations.md
 assets/kitchen/manifest.json assets/kitchen/PROVENANCE.json
 .github/workflows/test.yml .github/ISSUE_TEMPLATE/bug_report.yml

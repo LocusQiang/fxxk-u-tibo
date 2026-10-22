@@ -46,6 +46,8 @@ class KitchenApp:
         self.projectile=LayeredOverlay(self.root,'Codex 厨房抛掷')
         self.message=LayeredOverlay(self.root,'Codex 重试次数')
         self.events, self.notifications = queue.Queue(), deque()
+        self.controls = queue.Queue()
+        self.tray = None
         self.stop = threading.Event()
         self.paused = threading.Event()
         self.active = None
@@ -57,16 +59,19 @@ class KitchenApp:
         self.started = 0
         self.journal = journal if journal is not None else Journal()
         self.menu = tk.Menu(self.root, tearoff=False)
+        self.menu.add_command(label=translate('Daily statistics', '每日统计'), command=self.open_stats)
         self.menu.add_command(label=translate('Pause / resume retries', '暂停 / 恢复自动重试'), command=self.toggle_pause)
         self.menu.add_command(label=translate('Open this conversation', '打开对应对话'), command=self.open_current)
         self.menu.add_command(label=translate('Stop auto retry', '退出自动重试'), command=self.request_stop)
         for overlay in (self.projectile,self.message):
             overlay.window.bind('<Button-3>', lambda e: self.menu.tk_popup(e.x_root,e.y_root))
             overlay.window.bind('<Escape>', lambda e: self.hide())
+        self.message.window.bind('<Button-1>', lambda e: self.open_stats())
         if args.demo:
             for _ in range(args.demo_count):
                 self.notifications.append({'kind':'sent', 'count':self.journal.daily_count(), 'title':'预览 · 不会发送消息'})
         else:
+            self.setup_tray()
             self.worker = threading.Thread(target=self.watch, daemon=True)
             self.worker.start()
         self.root.after(30, self.animate)
@@ -75,6 +80,29 @@ class KitchenApp:
             self.root.after(800,self.screenshot)
         if args.ui_smoke:
             self.root.after(4700, self.smoke_check)
+
+    def setup_tray(self):
+        import pystray
+        from PIL import Image
+        from app_config import ROOT
+        def action(name):
+            return lambda icon, item: self.controls.put(name)
+        self.tray = pystray.Icon('fxxk-u-tibo', Image.open(ROOT / 'assets/kitchen/sprites/frying-pan.png'),
+                                 'fxxk u tibo', menu=pystray.Menu(
+            pystray.MenuItem(translate('Daily statistics', '每日统计'), action('stats'), default=True),
+            pystray.MenuItem(translate('Pause / resume', '暂停 / 恢复'), action('pause'),
+                            checked=lambda item: self.paused.is_set()),
+            pystray.MenuItem(translate('Stop auto retry', '退出自动重试'), action('stop'))))
+        self.tray.run_detached()
+
+    def open_stats(self):
+        from dashboard import Dashboard
+        existing = getattr(self, 'dashboard', None)
+        if existing and not existing.closed:
+            existing.root.deiconify()
+            existing.root.lift()
+            return
+        self.dashboard = Dashboard(tk.Toplevel(self.root))
 
     def watch(self):
         scanner = Scanner()
@@ -107,6 +135,17 @@ class KitchenApp:
         self.events.put({**notification, 'show_visual': show_visual})
 
     def pump(self):
+        controls = getattr(self, 'controls', None)
+        if controls is not None:
+            while not controls.empty():
+                action = controls.get_nowait()
+                if action == 'stats':
+                    self.open_stats()
+                elif action == 'pause':
+                    self.toggle_pause()
+                elif action == 'stop':
+                    self.request_stop()
+                    return
         if not self.args.demo and (DATA_DIR / 'stop.request').exists():
             self.quit()
             return
@@ -252,9 +291,14 @@ class KitchenApp:
         assert len(set(self.text_positions))==1
         assert self.toast_hide_time is not None and .90<=self.toast_hide_time<=1.15
         assert not self.active and not any(o.user32.IsWindowVisible(o.hwnd) for o in (self.projectile,self.message))
-        print(json.dumps({'ui_smoke':'passed','parabolic_right_to_left':True,'toast_stationary':True,
+        result = {'ui_smoke':'passed','parabolic_right_to_left':True,'toast_stationary':True,
                           'toast_seconds':round(self.toast_hide_time,3),'item':self.item['name'],
-                          'frames':self.frames,'demo_only':True,'daily_count':self.journal.daily_count()},ensure_ascii=False),flush=True)
+                          'frames':self.frames,'demo_only':True,'daily_count':self.journal.daily_count()}
+        if getattr(self.args, 'ui_report', None):
+            from pathlib import Path
+            Path(self.args.ui_report).write_text(json.dumps(result, ensure_ascii=False), encoding='utf-8')
+        if sys.stdout:
+            print(json.dumps(result, ensure_ascii=False), flush=True)
         self.quit()
 
     def request_stop(self):
@@ -278,6 +322,8 @@ class KitchenApp:
             return
         self.projectile.close()
         self.message.close()
+        if getattr(self, 'tray', None):
+            self.tray.stop()
         self.root.destroy()
 
 def main():
@@ -290,6 +336,7 @@ def main():
     parser.add_argument('--scan',action='store_true')
     parser.add_argument('--ui-smoke',action='store_true')
     parser.add_argument('--screenshot')
+    parser.add_argument('--ui-report')
     args=parser.parse_args()
     if args.scan:
         print(json.dumps({'pending':len(Scanner().scan()),'daily_count':Journal().daily_count()},ensure_ascii=False))

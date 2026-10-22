@@ -10,7 +10,23 @@
 
 [![Windows tests](https://github.com/LocusQiang/fxxk-u-tibo/actions/workflows/test.yml/badge.svg)](https://github.com/LocusQiang/fxxk-u-tibo/actions/workflows/test.yml)
 
-**[下载 v0.1.1 — Windows 预览版](https://github.com/LocusQiang/fxxk-u-tibo/releases/tag/v0.1.1)** · 源码 ZIP，需另行安装 Python 和 Node.js。
+**[下载 v0.2.0 — Windows x64 EXE](https://github.com/LocusQiang/fxxk-u-tibo/releases/tag/v0.2.0)** · 独立 EXE、源码 ZIP、依赖许可和 SHA256 校验文件。
+
+## EXE 快速开始
+
+1. 下载 fxxk-u-tibo-0.2.0-windows-x64.exe，放在固定、可写的文件夹。已内置 Python 和 Node.js，无需另装运行环境。EXE 尚未签名，Windows 可能显示未知发布者提示；应用本身不请求管理员权限。
+2. 双击打开统计和控制面板，此时不会发送消息。若 Codex 使用自定义目录，先点击「Codex 目录…」；默认使用 CODEX_HOME 或用户目录下的 .codex。
+3. 了解下方续接规则后，点击「启动重试」。之后点击系统托盘里的厨具图标（可能在隐藏图标区），或点击一秒提醒，即可打开统计。
+4. 点击「开机自启动…」，可启用 Windows 登录自启动和每分钟故障恢复；开启后可能在一分钟内开始监测。它不与 Codex 启动入口绑定。「停止」会持续生效到主动启动或下次重启电脑。
+
+统计显示今天、所选时段、累计已确认发送次数，以及 7／30／90 天趋势和每日涉及的对话数。日期按本机时区计算。「待确认」不会算入已重试，也不会自动补发。关闭统计窗口不停止监控；预览动画不发送、不增加次数。
+
+私人配置和历史保存在 **EXE 同目录的 .runtime**。启用自启动后请保持 EXE 的位置不变；移动前先关闭自启动。单文件运行时会把依赖临时解压到 Windows 临时目录。统计不会上传。
+
+**从源码版升级：**先停止旧程序并关闭旧自启动，保留 .runtime（尤其是 actions.jsonl 和 baseline.json），将 EXE 放在其旁边；也可使用 --data-dir 指向原数据目录。保持同一个 Codex 主目录，不要删除日志来强制重试。再用 EXE 面板注册新自启动。下文源码安装方式仍保留给开发者使用。
+
+EXE 只读诊断：Codex 打开时运行 EXE 并附加 **--doctor --connect**。结果写入 .runtime/doctor.json，包含私人路径，分享前请检查并脱敏。
+
 
 面向 **Windows 版 Codex 桌面应用**的非官方自动续接工具。对话因已核实的服务不可用、HTTP 503、服务器过载或模型容量不足而中断时，它会向同一对话发送固定中文 **`继续`**。屏幕上会抛过一个可爱的 AI 生成厨具，并显示位置固定、持续一秒的提醒。没有语音播报。
 
@@ -22,10 +38,10 @@
 
 **启动监控后，工具会自动续接符合条件的对话。第一次点击 Start 前，请确认以下默认行为符合你的意图：**
 
-- 检测所配置 Codex 主目录下的本地用户对话，**排除已归档对话和 subagent（子代理）对话**。范围不限于当前打开的聊天。v0.1.x 暂无包含归档对话的开关。
+- 检测所配置 Codex 主目录下的本地用户对话，**排除已归档对话和 subagent（子代理）对话**。范围不限于当前打开的聊天。v0.2.x 暂无包含归档对话的开关。
 - **首次正式 Start 会建立持久基线，跳过当时已存在的失败。** 之后只自动恢复新出现且符合条件的失败。安装和预览不会启动监控。如需恢复已有失败任务，请打开对应对话，手动发送一次 `继续`。
 - 自动续接可能消耗 Codex 用量或额度，并继续原任务中的工具调用或其他动作。它沿用原对话的权限和设置，**不绕过审批，也不授予额外权限**。
-- 实际发送始终是中文 **`继续`**。即使选择英文界面，也不会改成英文 `Continue`；v0.1.x 不支持自定义发送文本。
+- 实际发送始终是中文 **`继续`**。即使选择英文界面，也不会改成英文 `Continue`；v0.2.x 不支持自定义发送文本。
 - 已处理的中断不会重复补发；发送结果未知时禁止自动补发。运行态未知或历史结构不兼容时，阻止该次提交。同一对话两次发送至少间隔 **30 秒**。同一对话随后出现新的、符合条件的中断时，仍可再次续接。
 - 锁屏时，只要桌面应用与本地会话仍可用，后台发送继续；视觉提醒直接丢弃，解锁后不补播。电脑睡眠或关机期间无法运行。
 
@@ -33,7 +49,7 @@
 
 **公开版与个人早期原型不同：**首次正式启动跳过已有失败，排除归档对话，并且不再通过旧版会话文件扫描触发自动发送。请以公开版文档为准，不要沿用早期原型的操作预期。
 
-## 环境要求与兼容性
+## 源码环境要求与兼容性
 
 | 组件 | 要求 | 证据范围 |
 | --- | --- | --- |
@@ -43,11 +59,11 @@
 | Node.js | 单独安装的 **22+** | 本机基线 **22.20**；最低版本要求不代表后续版本均已测试。 |
 | Pillow | **12.2.0** | 安装时放入项目的 Python 虚拟环境。 |
 
-不支持 Codex CLI、VS Code 扩展、macOS 或 Linux。不捆绑 Python、Node.js；请从 [Python Windows 下载页](https://www.python.org/downloads/windows/)和 [Node.js 下载页](https://nodejs.org/en/download)安装，并在 Python 安装时保留 Tcl/Tk 支持。
+不支持 Codex CLI、VS Code 扩展、macOS 或 Linux。独立 EXE 已捆绑运行依赖；源码运行请从 [Python Windows 下载页](https://www.python.org/downloads/windows/)和 [Node.js 下载页](https://nodejs.org/en/download)安装，并在 Python 安装时保留 Tcl/Tk 支持。
 
 当前依赖桌面进程间通信（IPC）的 **snapshot v11**、**start-turn v2**，以及结构兼容的本地数据库 **`state_5.sqlite`** 和 **`thread_history_1.sqlite`**。两份数据库都必须存在；缺少历史数据库时 Doctor 会报错。这些属于内部实现，不是稳定的公开接口。Codex 升级后不保证检测或发送仍能工作，详见[兼容矩阵与升级步骤](docs/compatibility.md)。
 
-## 安装
+## 从源码安装
 
 在 Windows 下载 ZIP 后，请先右键 ZIP，选择 **属性 > 解除锁定（Unblock）**并应用，**再解压**到可写目录（如果属性中显示该选项）。启动入口和自启脚本使用 `RemoteSigned`；下面的 `Bypass` 仅用于本次安装器调用，不要修改全局 PowerShell 执行策略。也可以使用源码检出目录。
 
@@ -154,13 +170,16 @@ powershell -NoProfile -ExecutionPolicy RemoteSigned -File .\install-autostart.ps
 
 ## 验证状态
 
+**v0.2.0：**本地统计、独立 EXE、中英文面板、只读连接、动画和程序故障恢复检查已通过；已在维护者电脑实际注册并运行 EXE 自启动任务。本版尚未完成物理重启、真实锁屏发送和第二台电脑测试。详见[当前验证记录](docs/compatibility.md#v020-validation)。下方 v0.1.0 数据属于历史记录。
+
+
 维护者提供的**单机本地桌面基线**为 Windows 11 x64、Codex 26.1016.6573.0、Python 3.14.3、Node.js 22.20。尚未在另一台电脑验证桌面兼容性。
 
 维护者报告，v0.1.0 候选版的 **48 项 Python 测试、16 项 Node 测试、26 项 Windows PowerShell 5.1 检查在本地通过**。安装在公开版工作目录，以及从允许清单 ZIP 解压得到的中文、含空格嵌套路径中均已通过；发布包 Demo 启动也已通过。英中视觉 smoke 检查通过；Doctor 只读连接与真实空闲快照解析通过，**真实续接消息发送数为零**。
 
 **[GitHub Actions 运行 39750132929](https://github.com/LocusQiang/fxxk-u-tibo/actions/runs/39750132929) 在修订 `6a9037d` 上通过**：四个 `windows-latest` 任务分别使用 Python 3.11、3.12、3.13、3.14，均搭配 Node.js 22。每个任务均通过 48 项 Python 测试、16 项 Node 测试、PowerShell 语法解析和打包。该运行早于新增的 PowerShell 生命周期测试脚本；上面的 26 项结果属于本地证据。上方徽章链接当前工作流运行。
 
-公开版尚**未验证**真实发送、真实锁屏/解锁、计划任务注册和重启恢复。托管环境的模拟测试不代表另一台电脑上的真实 Codex 行为。实测数值与证据范围见[验证记录](docs/compatibility.md#release-validation-record)。
+上述 v0.1.0 候选版当时**未验证**真实发送、真实锁屏/解锁、计划任务注册和重启恢复。v0.2.0 已补充实际计划任务注册和启动检查，见上方当前记录。托管环境的模拟测试不代表另一台电脑上的真实 Codex 行为。历史实测数值与证据范围见[验证记录](docs/compatibility.md#release-validation-record)。
 
 ## 贡献与许可
 

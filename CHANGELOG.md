@@ -2,6 +2,18 @@
 
 Changes to fxxk u tibo are recorded here. Release entries describe behavior; they are not test reports.
 
+## v0.2.0 — daily statistics and standalone Windows EXE
+
+- Add a persistent kitchen system-tray icon. Click it or a retry toast to open daily statistics; closing statistics leaves monitoring running.
+- Show today's confirmed continuations, 7/30/90-day trends, lifetime totals, daily affected-conversation counts, and unresolved sends. Statistics use local dates and the durable journal; preview animations do not count.
+- Add a single-file Windows x64 EXE with Python, Node.js, Tk, Pillow and tray dependencies included. Double-click opens statistics and controls without immediately starting the sender.
+- Keep opt-in logon startup and one-minute supervisor recovery. EXE startup settings are available in the dashboard; a task owned by another installation is never replaced silently.
+- Store EXE state beside the executable under .runtime, outside the temporary extraction directory. Existing journal and baseline can be retained during upgrades.
+- Preserve the retry eligibility checks, durable send deduplication, locked-screen visual suppression, and 3–60-second worker recovery.
+- Include dependency licenses and pystray source in the EXE and a companion ZIP. The executable is unsigned.
+
+Validation evidence and untested environments are recorded in [Compatibility](docs/compatibility.md#v020-validation).
+
 ## v0.1.1 — project rename and multilingual slogan
 
 - Rename the project to **fxxk u tibo** and the repository to **LocusQiang/fxxk-u-tibo**. The previous name was Codex Auto Retry Kitchen.

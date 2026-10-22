@@ -11,7 +11,7 @@ import sqlite3
 import subprocess
 import sys
 
-from app_config import ROOT, DATA_DIR, codex_home, language, runtime_settings
+from app_config import ROOT, DATA_DIR, codex_home, language, runtime_settings, node_executable
 
 
 def schema_check(home):
@@ -52,7 +52,7 @@ def diagnose(connect=False):
         except ImportError:
             add(module, False, 'Missing; rerun install.ps1 with a Python installation that includes tkinter')
     settings = runtime_settings()
-    node = settings.get('node') or shutil.which('node')
+    node = node_executable()
     flags = getattr(subprocess, 'CREATE_NO_WINDOW', 0)
     try:
         if not node:

@@ -10,7 +10,7 @@ import sys
 import time
 
 from lifecycle import acquire_mutex, close_mutex, mutex_exists, SUPERVISOR_MUTEX
-from app_config import ROOT, DATA_DIR, ensure_data_dir, runtime_settings
+from app_config import ROOT, DATA_DIR, ensure_data_dir, runtime_settings, codex_home, app_command
 
 HERE = ROOT
 
@@ -66,7 +66,8 @@ def main():
     pid_file = DATA_DIR / 'supervisor.pid'
     try:
         settings = runtime_settings()
-        os.environ['CODEX_HOME'] = settings['codex_home']
+        home = str(codex_home())
+        os.environ['CODEX_HOME'] = home
         os.environ['CODEX_RETRY_DATA_DIR'] = str(DATA_DIR)
         os.environ['CODEX_RETRY_LANGUAGE'] = settings.get('language', 'auto')
         # Manual stop lasts for this boot; reboot restores the user's autostart.
@@ -76,9 +77,8 @@ def main():
         if stop.exists() and stop.stat().st_mtime < boot_time:
             stop.unlink()
         pid_file.write_text(str(os.getpid()), encoding='ascii')
-        logging.info('Supervisor started pid=%s CODEX_HOME=%s', os.getpid(), settings['codex_home'])
-        supervise([sys.executable, '-X', 'utf8', str(HERE / 'retry_kitchen.py'),
-                   '--node', settings['node']])
+        logging.info('Supervisor started pid=%s CODEX_HOME=%s', os.getpid(), home)
+        supervise(app_command('--worker'))
     except Exception:
         logging.exception('Supervisor fatal error')
         raise

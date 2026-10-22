@@ -13,6 +13,17 @@ from test_monitor import write_db, ERR
 
 
 class PortabilityTests(unittest.TestCase):
+    def test_saved_codex_folder_overrides_inherited_default(self):
+        from app_config import codex_home
+        with tempfile.TemporaryDirectory(dir=HERE) as folder:
+            inherited = str(Path(folder) / 'inherited')
+            selected = str(Path(folder) / 'selected')
+            with patch.dict('os.environ', {'CODEX_HOME': inherited}):
+                with patch('app_config.runtime_settings', return_value={}):
+                    self.assertEqual(codex_home(), Path(inherited).resolve())
+                with patch('app_config.runtime_settings', return_value={'codex_home': selected}):
+                    self.assertEqual(codex_home(), Path(selected).resolve())
+
     def test_missing_runtime_status_never_sends(self):
         failure = Failure('chat', 'turn', '', 0, '')
         for runtime in (None, {}, {'type': 'unknown'}, {'type': 'active'}):

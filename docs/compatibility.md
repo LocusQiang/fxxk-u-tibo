@@ -2,11 +2,33 @@
 
 fxxk u tibo targets Windows 10/11 x64 and the Windows Codex desktop app. It uses private local interfaces. A target or a passing capability check is not a guarantee that a real continuation works on every machine or after an upgrade.
 
+## v0.2.0 validation
+
+Local candidate checks on 2026-10-22 used Windows 11 x64, Codex 26.1016.6573.0,
+Python 3.14.3 and bundled Node 22.20.0. The standalone executable is unsigned.
+
+| Evidence | Observed result | Limit |
+| --- | --- | --- |
+| Local regression | 56 Python tests, 16 Node tests, 28 source PowerShell checks, 11 EXE task ownership checks | Synthetic fixtures; no live continuation submissions. |
+| Statistics | Deduplication, unresolved sends, local midnight, malformed lines, zero days, totals and distinct daily conversations passed | Counts describe confirmed submission, not task completion. |
+| Standalone package | Actual EXE ran from a Chinese/space path with Python and Node removed from PATH | Same PC, not a clean Windows installation. |
+| Native UI | English and Chinese statistics rendered and were visually inspected; high-DPI clipping fixed | Tested at the maintainer's desktop scale. |
+| Packaged animation | 83 frames; parabolic right-to-left trajectory, stationary toast measured 1.004 seconds | Preview only, synthetic count; zero live messages. |
+| Packaged Doctor | Bundled runtimes, assets, database schema and read-only desktop handshake passed | No start-turn submission performed by Doctor. |
+| Actual packaged recovery | Killed the worker against an empty synthetic Codex database; supervisor restarted it. Manual Stop then blocked Ensure. | No real chats in the recovery fixture. |
+| Actual task registration | EXE logon/recovery task registered and read back; launching the real task started supervisor and worker | Physical reboot/logon not performed. |
+| Private local upgrade | Previous journal copied with identical SHA256; baseline and counters preserved; old task disabled with rollback backup | Personal data and backups excluded from publication. |
+| EXE privacy | Inspected embedded files and Python code objects: no maintainer username/private workspace paths, no absolute code filenames | Targeted packaging check, not a formal security audit. |
+| Unrun scenarios | Physical reboot, real locked-screen sending in this version, Windows 10, another PC | Do not treat synthetic lock tests or Doctor as substitutes. |
+
+GitHub Actions validates each revision separately; see the workflow badge and
+release's linked revision. The following v0.1.x results are historical evidence.
+
 ## v0.1.1 rename
 
 The project was previously named **Codex Auto Retry Kitchen**. Version 0.1.1 updates the repository name, display titles, documentation, and archive name, and adds 60 language versions of the slogan. The new archive contains 79 allowlisted files. The retry algorithm and its saved-state and process identities are unchanged. Local release-package checks (2 tests) and PowerShell lifecycle checks (26 checks) passed for this change. The v0.1.0 results below remain historical evidence; this rename does not add real-send, lock-screen, reboot, or cross-computer validation.
 
-## Environment matrix
+## Historical v0.1.0 environment matrix
 
 | Environment/component | Target or requirement | Available evidence | Remaining gap |
 | --- | --- | --- | --- |
@@ -24,7 +46,7 @@ The project was previously named **Codex Auto Retry Kitchen**. Version 0.1.1 upd
 | Codex CLI / VS Code extension | Unsupported | No integration support | Use the Windows desktop app. |
 | macOS / Linux | Unsupported | Windows-specific desktop, lifecycle, and UI integration | No support claim. |
 
-Python, Node.js, and Codex are separately installed. Python must include tkinter/Tcl/Tk support. Pillow is installed into the project environment and retains its separate license.
+For source installations, Python, Node.js, and Codex are separately installed. Python must include tkinter/Tcl/Tk support. Pillow is installed into the project environment and retains its separate license. The v0.2.0 EXE bundles its runtime dependencies; Codex is still installed separately.
 
 ## Private interface contract
 
