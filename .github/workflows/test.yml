@@ -36,3 +36,6 @@ jobs:
           }
       - name: Build source distribution
         run: python package_release.py
+      - name: Windows PowerShell lifecycle and task ownership checks
+        shell: powershell
+        run: ./scripts/test-scripts.ps1

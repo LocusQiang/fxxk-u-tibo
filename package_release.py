@@ -14,6 +14,7 @@ app_config.py doctor.py monitor.py desktop_bridge.cjs desktop_state.py
 kitchen_art.py overlay.py retry_kitchen.py lifecycle.py supervisor.py
 install.ps1 launch.ps1 install-autostart.ps1 Start.vbs Stop.vbs Preview.vbs
 scripts/common.ps1 scripts/setup.ps1 scripts/doctor.ps1 scripts/stop.ps1 scripts/vbs-entry.ps1
+scripts/test-scripts.ps1
 test_monitor.py test_auto.py test_concurrency.py test_locking.py
 test_supervisor.py test_portability.py test_bridge.cjs test_release.py
 package_release.py

@@ -14,7 +14,7 @@ No separate security email address, guaranteed response time, or bounty program 
 
 ## Version scope
 
-The initial public release is v0.1.0. Release validation is pending in [Compatibility](docs/compatibility.md#release-validation-record). Reports should identify the exact release or commit. No security maintenance commitment is made for the earlier personal prototype, unpublished local modifications, unsupported platforms, or unverified Codex builds.
+The initial public release is v0.1.0. Completed checks and remaining validation gaps are recorded in [Compatibility](docs/compatibility.md#release-validation-record). Reports should identify the exact release or commit. No security maintenance commitment is made for the earlier personal prototype, unpublished local modifications, unsupported platforms, or unverified Codex builds.
 
 A vulnerability in Codex itself belongs with its vendor's security reporting process; include this project only when its behavior is involved.
 

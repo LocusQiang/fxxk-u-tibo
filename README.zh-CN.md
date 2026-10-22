@@ -2,6 +2,10 @@
 
 [English](README.md) · [兼容性](docs/compatibility.md) · [更新记录](CHANGELOG.md) · [安全说明](SECURITY.md)
 
+[![Windows tests](https://github.com/LocusQiang/codex-auto-retry-kitchen/actions/workflows/test.yml/badge.svg)](https://github.com/LocusQiang/codex-auto-retry-kitchen/actions/workflows/test.yml)
+
+**[下载 v0.1.0 — Windows 预览版](https://github.com/LocusQiang/codex-auto-retry-kitchen/releases/tag/v0.1.0)** · 源码 ZIP，需另行安装 Python 和 Node.js。
+
 面向 **Windows 版 Codex 桌面应用**的非官方自动续接工具。对话因已核实的服务不可用、HTTP 503、服务器过载或模型容量不足而中断时，它会向同一对话发送固定中文 **`继续`**。屏幕上会抛过一个可爱的 AI 生成厨具，并显示位置固定、持续一秒的提醒。没有语音播报。
 
 本项目独立于 OpenAI，不是官方产品或受官方支持的集成。它依赖未公开的桌面接口，接口可能随时变化。
@@ -29,7 +33,7 @@
 | --- | --- | --- |
 | Windows | Windows 10 或 11，x64 | 目标平台；当前报告的本机环境只有 Windows 11。 |
 | Codex | 已安装并登录的 Windows 桌面应用 | 本机基线版本 **26.1016.6573.0**；其他版本需要重新检测能力。 |
-| Python | **3.11–3.14**，包含 `tkinter` | 本机基线 **3.14.3**；尚未逐版本、逐电脑验证整个范围。 |
+| Python | **3.11–3.14**，包含 `tkinter` | 本机桌面检查使用 **3.14.3**；托管 CI 的 3.11、3.12、3.13、3.14 均通过。CI 不代表另一台电脑上的真实 Codex 兼容性。 |
 | Node.js | 单独安装的 **22+** | 本机基线 **22.20**；最低版本要求不代表后续版本均已测试。 |
 | Pillow | **12.2.0** | 安装时放入项目的 Python 虚拟环境。 |
 
@@ -144,9 +148,13 @@ powershell -NoProfile -ExecutionPolicy RemoteSigned -File .\install-autostart.ps
 
 ## 验证状态
 
-维护者提供的**单机本地基线**为 Windows 11 x64、Codex 26.1016.6573.0、Python 3.14.3、Node.js 22.20。这不代表跨电脑验证，也不代表所有声明支持的依赖版本均已测试。
+维护者提供的**单机本地桌面基线**为 Windows 11 x64、Codex 26.1016.6573.0、Python 3.14.3、Node.js 22.20。尚未在另一台电脑验证桌面兼容性。
 
-**v0.1.0 的最终发行验证结果待补充。** 安装、自动化测试、首次基线、归档排除、真实发送、锁屏/解锁、故障恢复及发行包内容，均需在[验证记录](docs/compatibility.md#release-validation-record)中填写实际结果。本文档没有宣称这些发行检查已经通过。
+维护者报告，v0.1.0 候选版的 **48 项 Python 测试、16 项 Node 测试、26 项 Windows PowerShell 5.1 检查在本地通过**。安装在公开版工作目录，以及从允许清单 ZIP 解压得到的中文、含空格嵌套路径中均已通过；发布包 Demo 启动也已通过。英中视觉 smoke 检查通过；Doctor 只读连接与真实空闲快照解析通过，**真实续接消息发送数为零**。
+
+**[GitHub Actions 运行 39750132929](https://github.com/LocusQiang/codex-auto-retry-kitchen/actions/runs/39750132929) 在修订 `6a9037d` 上通过**：四个 `windows-latest` 任务分别使用 Python 3.11、3.12、3.13、3.14，均搭配 Node.js 22。每个任务均通过 48 项 Python 测试、16 项 Node 测试、PowerShell 语法解析和打包。该运行早于新增的 PowerShell 生命周期测试脚本；上面的 26 项结果属于本地证据。上方徽章链接当前工作流运行。
+
+公开版尚**未验证**真实发送、真实锁屏/解锁、计划任务注册和重启恢复。托管环境的模拟测试不代表另一台电脑上的真实 Codex 行为。实测数值与证据范围见[验证记录](docs/compatibility.md#release-validation-record)。
 
 ## 贡献与许可
 

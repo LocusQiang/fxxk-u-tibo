@@ -6,15 +6,15 @@ Codex Auto Retry Kitchen targets Windows 10/11 x64 and the Windows Codex desktop
 
 | Environment/component | Target or requirement | Available evidence | Remaining gap |
 | --- | --- | --- | --- |
-| Windows 11 x64 | Target | Maintainer-reported local environment on one PC | Final public-release scenarios are pending below. |
+| Windows 11 x64 | Target | Local suites, installation, visual smoke, and read-only desktop checks on one PC | Real sending, lock/unlock, scheduler registration, and reboot behavior remain unvalidated for the public build. |
 | Windows 10 x64 | Target | No separate Windows 10 result recorded here | Requires an actual Windows 10 run. |
-| Codex desktop 26.1016.6573.0 | Known local baseline | Maintainer-reported use on that Windows 11 PC | Revalidate the final public-release changes. |
+| Codex desktop 26.1016.6573.0 | Known local baseline | Read-only connection and parsing of an actual idle, completed canonical snapshot passed | No real continuation messages sent during public-build validation. |
 | Other Codex desktop builds | No compatibility guarantee | No results claimed | Check schema and IPC, then validate behavior in the intended environment. |
-| Python 3.14.3 | Known local baseline | Maintainer-reported environment | Final release results pending. |
-| Python 3.11–3.14, with tkinter | Required range | Full version range not exercised here | Runtime availability and behavior need checks per environment. |
-| Node.js 22.20 | Known local baseline | Maintainer-reported environment | Final release results pending. |
+| Python 3.14.3 | Known local baseline | Local Python suite passed in the reported environment | Does not establish behavior on every supported Python version. |
+| Python 3.11–3.14, with tkinter | Required range | Hosted CI passed on 3.11, 3.12, 3.13, and 3.14 with Node.js 22 at `6a9037d` | Synthetic CI does not validate real Codex integration or visuals on each version. |
+| Node.js 22.20 | Known local baseline | Local Node suite and read-only bridge checks passed | Other runtime versions need separate evidence. |
 | Node.js 22+ | Minimum requirement | Later versions not exhaustively tested | A version threshold alone is not compatibility evidence. |
-| Pillow 12.2.0 | Pinned dependency | Declared release dependency | Installation and rendering results pending. |
+| Pillow 12.2.0 | Pinned dependency | Fresh environment download/install and English/Chinese visual smoke passed | Results are from the same local PC. |
 | Another computer | Not yet validated | No independent machine result recorded | Do not describe repeated runs on the same PC as cross-computer validation. |
 | Windows ARM64 or 32-bit | Outside the x64 target | No support claim | No validation committed. |
 | Codex CLI / VS Code extension | Unsupported | No integration support | Use the Windows desktop app. |
@@ -87,27 +87,24 @@ After a Codex upgrade:
 
 ## Release validation record
 
-**Final release validation results are pending.** The reported single-PC environment above is context, not a completed validation record for the final public release. Do not infer final test totals or passed release checks from this documentation.
+Results reported by the maintainer and reviewers on **2026-10-22** for the **v0.1.0 candidate checkout**. Local installation, desktop, and visual results below are from one Windows 11 x64 PC with Codex 26.1016.6573.0, Python 3.14.3, and Node.js 22.20. The separately recorded hosted CI result applies to revision **`6a9037d`**; it does not establish real Codex compatibility on another PC.
 
-Fill in the tested release/commit, date, environment, exact check or scenario, observed result, and remaining limitations. Keep private evidence local; use sanitized summaries or synthetic artifacts in public records. Distinguish these evidence types:
-
-| Evidence category | Required check or scenario | Status |
+| Evidence category | Result | Scope and limits |
 | --- | --- | --- |
-| Static documentation | Commands, links, bilingual behavior, license boundaries, and privacy wording | Local documentation checks completed; final release review pending. |
-| Artwork privacy review | Current 28 sprites and contact sheet | Maintainer reports visual inspection completed with no private information found. This does not establish runtime behavior or legal ownership. |
-| Private security reporting | Repository reporting configuration | Maintainer confirmed enabled through the GitHub API; private report form is linked in SECURITY.md. |
-| Automated local tests | Final Python and Node test suites at the release revision | Pending final run and results; no fixed total claimed. |
-| Fresh installation | Setup, dependency checks, configuration, and no automatic start/autostart | Pending. |
-| First normal Start | Persist baseline, skip existing failures, process only later new qualifying failures | Pending. |
-| Restart persistence | Preserve baseline, pending/unknown records, and duplicate protection | Pending. |
-| Eligibility | Exclude archived/subagent chats; no archived opt-in switch | Pending. |
-| Strict compatibility | Missing history is an error; unknown runtime/history and incompatible schemas prevent submission | Pending. |
-| Sending and acknowledgement | Exact `继续` input, inherited settings, new-turn string confirmation, no unknown-outcome resend, at least 30 seconds per chat | Pending. |
-| Visual preview | Sprite rendering and stationary one-second text; no message sent | Pending. |
-| Live desktop behavior | Intentional real continuation, lock/unlock visual discard, no replay | Pending; synthetic checks cannot substitute. |
-| Lifecycle | Start/Stop, in-flight send handling, opt-in autostart/removal, recovery, reboot boundary | Pending. |
-| Release artifact | Inspect actual allowlisted package; exclude runtime data, personal files, and separately installed dependencies | Pending. |
-| Additional machine / Windows 10 | Actual separate-machine and OS evidence | Not yet recorded. |
-| Original task outcome | Whether a resumed user task completed acceptably | Not implied by a successful send or any tool test. |
+| Automated local suites | **48 Python tests and 16 Node tests passed.** | Includes a synthetic 16-project mixed-outcome scenario, 16 simulated sends while locked, journal duplicate/unknown-outcome protection, baseline persistence, missing-database and archive handling, and child-process crash recovery. Simulated sends are not real Codex messages. |
+| Local PowerShell checks | **26 checks passed under Windows PowerShell 5.1** using `scripts/test-scripts.ps1`. | Covers task ownership guards, Stop/Ensure behavior, prior-boot state, mocked hidden launching, and environment restoration. No real scheduled-task registration, reboot, or sending occurred. Added after the recorded CI revision. |
+| Read-only desktop checks | **Doctor `--connect` passed.** A reviewer also probed an actual idle conversation with a completed canonical snapshot; the strict parser accepted its structure. | **Zero real continuation messages sent.** Accepting the snapshot structure does not make a completed turn eligible for a retry, or prove start-turn delivery. |
+| Installation | **Windows PowerShell 5.1 installation passed** in the public checkout and in a fresh allowlisted ZIP extraction under a nested path containing Chinese characters and spaces. | A fresh `.venv` and Pillow 12.2.0 were downloaded/installed. Installation started no sender and registered no scheduled task. Both runs used the same PC. |
+| English visual smoke | **Passed: 88 frames; measured toast duration 1.005 seconds.** | Actual `--ui-smoke` rendering; right-to-left parabolic flight and stationary toast checks passed. `demo_only=true`, `daily_count=0`. |
+| Chinese visual smoke | **Passed: 96 frames; measured toast duration 1.007 seconds.** | Actual `--ui-smoke` rendering; right-to-left parabolic flight and stationary toast checks passed. `demo_only=true`, `daily_count=0`. Neither visual run proves live sending. |
+| Source package | **The source package uses an explicit 78-file allowlist**, including `scripts/test-scripts.ps1`. Fresh package installation and Demo launch passed. | For distributed archives, use the checksum provided with the corresponding [GitHub Release](https://github.com/LocusQiang/codex-auto-retry-kitchen/releases). File counts do not identify archive contents. |
+| Source privacy and image metadata | **Zero findings** in the final 78-file source allowlist, including the lifecycle test script. Local documentation links also resolved. | The check searched for personal machine paths, real conversation identifiers, credential patterns, and embedded image metadata; it is not a formal security audit. |
+| Static documentation | Local relative-link/anchor, PowerShell example syntax, YAML structure, bilingual behavior, and privacy checks completed. | Does not prove GitHub-rendered forms or runtime behavior. |
+| Artwork privacy | All 28 current sprites and the contact sheet were visually inspected; no private information was found. | Maintainer-reported asset review; not a copyright or runtime claim. |
+| Private security reporting | Enabled, confirmed through the GitHub API. | Use the private form linked in [Security](../SECURITY.md). |
+| Continuous integration (CI) | **[Run 39750132929 passed](https://github.com/LocusQiang/codex-auto-retry-kitchen/actions/runs/39750132929) at `6a9037d`.** All four `windows-latest` matrix jobs used Python 3.11/3.12/3.13/3.14 with Node.js 22; each passed 48 Python tests, 16 Node tests, PowerShell parsing, and package construction. | The recorded run predates `scripts/test-scripts.ps1` and later documentation changes. Its success does not validate later revisions. [Current workflow runs](https://github.com/LocusQiang/codex-auto-retry-kitchen/actions/workflows/test.yml) provide revision-specific results; hosted synthetic tests do not establish real Codex behavior on a second computer. |
+| Real sending / real lock-unlock | **Not run for the public build.** | Unit-test lock behavior and visual smoke do not substitute for a real locked-desktop sending test. |
+| Scheduled-task registration / reboot | **Not run for the public build.** | Child-process recovery tests and installer checks do not establish actual scheduler registration or reboot recovery. |
+| Another PC / Windows 10 | **Not validated.** | A second folder or fresh ZIP on the same PC is not a second machine. |
 
-Successful unit tests, a Doctor probe, and a generated release archive each establish only their own checked scope. They do not establish cross-computer support or completion of a user's original task.
+These results establish only the scenarios and revisions stated. They do not establish completion of an original user task, compatibility with other Codex builds, or successful validation of a later revision.

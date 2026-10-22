@@ -2,6 +2,10 @@
 
 [简体中文](README.zh-CN.md) · [Compatibility](docs/compatibility.md) · [Changelog](CHANGELOG.md) · [Security](SECURITY.md)
 
+[![Windows tests](https://github.com/LocusQiang/codex-auto-retry-kitchen/actions/workflows/test.yml/badge.svg)](https://github.com/LocusQiang/codex-auto-retry-kitchen/actions/workflows/test.yml)
+
+**[Download v0.1.0 — Windows preview](https://github.com/LocusQiang/codex-auto-retry-kitchen/releases/tag/v0.1.0)** · Source ZIP; Python and Node.js are installed separately.
+
 An unofficial Windows companion for the **Codex desktop app**. When a conversation stops with a verified service-unavailable, HTTP 503, server-overload, or model-capacity error, it sends the literal Chinese message **`继续`** to that same conversation. A cute AI-generated kitchen utensil flies across the screen, accompanied by a stationary, one-second notification. There is no voice output.
 
 This project is independent of OpenAI and is not an official or supported Codex integration. It depends on undocumented desktop interfaces that can change without notice.
@@ -29,7 +33,7 @@ Installation does not start the watcher or enable autostart. Use the explicit St
 | --- | --- | --- |
 | Windows | Windows 10 or 11, x64 | Target platforms; the reported local environment is Windows 11 only. |
 | Codex | Windows desktop app, installed and signed in | Reported local build: **26.1016.6573.0**. Other builds require a fresh capability check. |
-| Python | **3.11–3.14**, with `tkinter` | Reported local version: **3.14.3**. The full version range has not been validated across machines. |
+| Python | **3.11–3.14**, with `tkinter` | Local desktop checks used **3.14.3**; hosted CI passed on 3.11, 3.12, 3.13, and 3.14. CI does not establish real Codex compatibility on another PC. |
 | Node.js | **22+**, installed separately | Reported local version: **22.20**. A minimum version is not a claim that all later versions were tested. |
 | Pillow | **12.2.0** | Installed into the project's virtual environment during setup. |
 
@@ -144,9 +148,13 @@ Use synthetic examples for public issues and pull requests. Do not upload raw ru
 
 ## Validation status
 
-The maintainer supplied a **single-machine local baseline**: Windows 11 x64, Codex 26.1016.6573.0, Python 3.14.3, and Node.js 22.20. This is not cross-computer validation or evidence for every supported dependency version.
+The maintainer supplied a **single-machine local desktop baseline**: Windows 11 x64, Codex 26.1016.6573.0, Python 3.14.3, and Node.js 22.20. Desktop compatibility has not been validated on another PC.
 
-**Final v0.1.0 release validation results are pending.** Installation, automated tests, first-start baseline behavior, archive exclusions, live sending, lock/unlock behavior, recovery, and release-package contents must be recorded with their actual results in [the validation record](docs/compatibility.md#release-validation-record). This documentation does not claim those release checks have passed.
+For the v0.1.0 candidate, the maintainer reports **48 Python tests, 16 Node tests, and 26 Windows PowerShell 5.1 checks passing locally**. Installation passed both in the public checkout and from a fresh allowlisted ZIP extracted under a nested path containing Chinese characters and spaces; package Demo launch also passed. English and Chinese visual smoke checks passed. Read-only Doctor connection and actual idle-snapshot parsing checks passed, with **zero real continuation messages sent**.
+
+**[GitHub Actions run 39750132929](https://github.com/LocusQiang/codex-auto-retry-kitchen/actions/runs/39750132929) passed at revision `6a9037d`** across all four `windows-latest` jobs: Python 3.11, 3.12, 3.13, and 3.14 with Node.js 22. Each job passed 48 Python tests, 16 Node tests, PowerShell parsing, and package construction. That run predates the added PowerShell lifecycle test script; its 26-check result above is local evidence. The badge links to current workflow runs.
+
+Real sending, real lock/unlock behavior, scheduled-task registration, and reboot recovery have **not** been validated for the public build. Hosted synthetic tests do not establish real Codex behavior on a second computer. See [the validation record](docs/compatibility.md#release-validation-record) for measured results and scope.
 
 ## Contributing and license
 

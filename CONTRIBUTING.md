@@ -18,7 +18,8 @@ The existing local test entry points are:
 
 ~~~powershell
 .\.venv\Scripts\python.exe -m unittest discover -s . -p "test_*.py"
-node .\test_bridge.cjs
+node --test .\test_bridge.cjs
+powershell -NoProfile -ExecutionPolicy RemoteSigned -File .\scripts\test-scripts.ps1
 ~~~
 
 Only run a live sending test when the operator explicitly intends to resume the affected task and understands its permissions and possible usage costs. The first-start baseline skips existing failures; test that boundary with fixtures instead of clearing personal runtime records.

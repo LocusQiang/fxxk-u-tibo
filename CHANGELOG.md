@@ -2,9 +2,9 @@
 
 Changes to Codex Auto Retry Kitchen are recorded here. Release entries describe behavior; they are not test reports.
 
-## v0.1.0 — initial public release (pending)
+## v0.1.0 — initial public release
 
-Publication date and release verification are pending completion by the release maintainer. No published tag or release artifact is asserted here.
+Completed checks, tested revisions, and remaining validation gaps are recorded in [Compatibility](docs/compatibility.md#release-validation-record).
 
 ### Added
 
@@ -27,4 +27,5 @@ The earlier personal prototype could act on unresolved historical failures, incl
 - Undocumented desktop IPC snapshot v11 and start-turn v2 may change after a Codex upgrade; compatibility is not guaranteed.
 - Codex CLI, VS Code, macOS, and Linux are unsupported.
 - The available local baseline is one Windows 11 machine with Codex 26.1016.6573.0, Python 3.14.3, and Node.js 22.20. It is not cross-computer validation.
-- Final release test counts and outcomes are pending in [the validation record](docs/compatibility.md#release-validation-record). No fixed pass count is claimed while changes and tests are still being integrated.
+- Local candidate validation records 48 Python tests, 16 Node tests, and 26 PowerShell 5.1 checks passing, successful installation and bilingual visual smoke checks, and read-only desktop checks with zero real messages. Real sending, real lock/unlock, scheduled-task registration, and reboot recovery remain unvalidated for the public build.
+- [GitHub Actions run 39750132929](https://github.com/LocusQiang/codex-auto-retry-kitchen/actions/runs/39750132929) passed at `6a9037d` across Python 3.11–3.14 with Node.js 22 on `windows-latest`, including 48 Python tests and 16 Node tests per job, PowerShell parsing, and package construction. This run predates the added PowerShell lifecycle test script. Packaging uses an explicit allowlist; checksums accompany the corresponding GitHub Release.
