@@ -1,6 +1,6 @@
 # Contributing
 
-Thanks for helping improve Codex Auto Retry Kitchen. English and Simplified Chinese issues and pull requests are welcome. Keep changes focused on a reproducible problem or a clearly described user need.
+Thanks for helping improve fxxk u tibo. English and Simplified Chinese issues and pull requests are welcome. Keep changes focused on a reproducible problem or a clearly described user need.
 
 ## Before opening an issue
 

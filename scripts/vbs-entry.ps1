@@ -12,7 +12,7 @@ try {
     $message = "$Action failed: $($_.Exception.Message)"
     try {
         $shell = New-Object -ComObject WScript.Shell
-        $null = $shell.Popup($message, 15, "Codex Auto Retry Kitchen", 16)
+        $null = $shell.Popup($message, 15, "fxxk u tibo", 16)
     } catch { [Console]::Error.WriteLine($message) }
     exit 1
 }

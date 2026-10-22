@@ -1,6 +1,13 @@
 # Changelog
 
-Changes to Codex Auto Retry Kitchen are recorded here. Release entries describe behavior; they are not test reports.
+Changes to fxxk u tibo are recorded here. Release entries describe behavior; they are not test reports.
+
+## v0.1.1 — project rename and multilingual slogan
+
+- Rename the project to **fxxk u tibo** and the repository to **LocusQiang/fxxk-u-tibo**. The previous name was Codex Auto Retry Kitchen.
+- Put the original slogan on both README pages and add [60 language versions](docs/slogan-translations.md). These are documentation translations; the application UI remains English and Chinese.
+- Update repository links, launcher display titles, and source archive naming. The source allowlist now contains 79 files, including the new translation page.
+- Keep retry behavior, saved runtime state, scheduled-task identity, mutex names, and the desktop protocol client identifier unchanged for compatibility. Existing v0.1.0 release artifacts retain their original names.
 
 ## v0.1.0 — initial public release
 
@@ -28,4 +35,4 @@ The earlier personal prototype could act on unresolved historical failures, incl
 - Codex CLI, VS Code, macOS, and Linux are unsupported.
 - The available local baseline is one Windows 11 machine with Codex 26.1016.6573.0, Python 3.14.3, and Node.js 22.20. It is not cross-computer validation.
 - Local candidate validation records 48 Python tests, 16 Node tests, and 26 PowerShell 5.1 checks passing, successful installation and bilingual visual smoke checks, and read-only desktop checks with zero real messages. Real sending, real lock/unlock, scheduled-task registration, and reboot recovery remain unvalidated for the public build.
-- [GitHub Actions run 39750132929](https://github.com/LocusQiang/codex-auto-retry-kitchen/actions/runs/39750132929) passed at `6a9037d` across Python 3.11–3.14 with Node.js 22 on `windows-latest`, including 48 Python tests and 16 Node tests per job, PowerShell parsing, and package construction. This run predates the added PowerShell lifecycle test script. Packaging uses an explicit allowlist; checksums accompany the corresponding GitHub Release.
+- [GitHub Actions run 39750132929](https://github.com/LocusQiang/fxxk-u-tibo/actions/runs/39750132929) passed at `6a9037d` across Python 3.11–3.14 with Node.js 22 on `windows-latest`, including 48 Python tests and 16 Node tests per job, PowerShell parsing, and package construction. This run predates the added PowerShell lifecycle test script. Packaging uses an explicit allowlist; checksums accompany the corresponding GitHub Release.

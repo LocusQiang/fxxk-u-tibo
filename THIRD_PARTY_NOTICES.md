@@ -4,7 +4,7 @@ This file distinguishes the project's license, bundled artwork, and separately i
 
 ## Project software
 
-Codex Auto Retry Kitchen is copyright (c) 2026 LocusQiang and is distributed under the [MIT License](LICENSE). Preserve that notice and license when redistributing the software or substantial portions of it.
+fxxk u tibo is copyright (c) 2026 LocusQiang and is distributed under the [MIT License](LICENSE). Preserve that notice and license when redistributing the software or substantial portions of it.
 
 ## Bundled AI-generated artwork
 

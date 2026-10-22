@@ -1,10 +1,16 @@
-# Codex Auto Retry Kitchen
+# fxxk u tibo
+
+**Windows 版 Codex 自动续接工具，附带随机抛厨具动画。**
+
+> fxxk u tibo，no more Selected model is at capacity. Please try a different model.
+
+[查看 60 种语言版本的文案](docs/slogan-translations.md) · 原名 **Codex Auto Retry Kitchen**。
 
 [English](README.md) · [兼容性](docs/compatibility.md) · [更新记录](CHANGELOG.md) · [安全说明](SECURITY.md)
 
-[![Windows tests](https://github.com/LocusQiang/codex-auto-retry-kitchen/actions/workflows/test.yml/badge.svg)](https://github.com/LocusQiang/codex-auto-retry-kitchen/actions/workflows/test.yml)
+[![Windows tests](https://github.com/LocusQiang/fxxk-u-tibo/actions/workflows/test.yml/badge.svg)](https://github.com/LocusQiang/fxxk-u-tibo/actions/workflows/test.yml)
 
-**[下载 v0.1.0 — Windows 预览版](https://github.com/LocusQiang/codex-auto-retry-kitchen/releases/tag/v0.1.0)** · 源码 ZIP，需另行安装 Python 和 Node.js。
+**[下载 v0.1.1 — Windows 预览版](https://github.com/LocusQiang/fxxk-u-tibo/releases/tag/v0.1.1)** · 源码 ZIP，需另行安装 Python 和 Node.js。
 
 面向 **Windows 版 Codex 桌面应用**的非官方自动续接工具。对话因已核实的服务不可用、HTTP 503、服务器过载或模型容量不足而中断时，它会向同一对话发送固定中文 **`继续`**。屏幕上会抛过一个可爱的 AI 生成厨具，并显示位置固定、持续一秒的提醒。没有语音播报。
 
@@ -16,10 +22,10 @@
 
 **启动监控后，工具会自动续接符合条件的对话。第一次点击 Start 前，请确认以下默认行为符合你的意图：**
 
-- 检测所配置 Codex 主目录下的本地用户对话，**排除已归档对话和 subagent（子代理）对话**。范围不限于当前打开的聊天。v0.1.0 暂无包含归档对话的开关。
+- 检测所配置 Codex 主目录下的本地用户对话，**排除已归档对话和 subagent（子代理）对话**。范围不限于当前打开的聊天。v0.1.x 暂无包含归档对话的开关。
 - **首次正式 Start 会建立持久基线，跳过当时已存在的失败。** 之后只自动恢复新出现且符合条件的失败。安装和预览不会启动监控。如需恢复已有失败任务，请打开对应对话，手动发送一次 `继续`。
 - 自动续接可能消耗 Codex 用量或额度，并继续原任务中的工具调用或其他动作。它沿用原对话的权限和设置，**不绕过审批，也不授予额外权限**。
-- 实际发送始终是中文 **`继续`**。即使选择英文界面，也不会改成英文 `Continue`；v0.1.0 不支持自定义发送文本。
+- 实际发送始终是中文 **`继续`**。即使选择英文界面，也不会改成英文 `Continue`；v0.1.x 不支持自定义发送文本。
 - 已处理的中断不会重复补发；发送结果未知时禁止自动补发。运行态未知或历史结构不兼容时，阻止该次提交。同一对话两次发送至少间隔 **30 秒**。同一对话随后出现新的、符合条件的中断时，仍可再次续接。
 - 锁屏时，只要桌面应用与本地会话仍可用，后台发送继续；视觉提醒直接丢弃，解锁后不补播。电脑睡眠或关机期间无法运行。
 
@@ -152,12 +158,12 @@ powershell -NoProfile -ExecutionPolicy RemoteSigned -File .\install-autostart.ps
 
 维护者报告，v0.1.0 候选版的 **48 项 Python 测试、16 项 Node 测试、26 项 Windows PowerShell 5.1 检查在本地通过**。安装在公开版工作目录，以及从允许清单 ZIP 解压得到的中文、含空格嵌套路径中均已通过；发布包 Demo 启动也已通过。英中视觉 smoke 检查通过；Doctor 只读连接与真实空闲快照解析通过，**真实续接消息发送数为零**。
 
-**[GitHub Actions 运行 39750132929](https://github.com/LocusQiang/codex-auto-retry-kitchen/actions/runs/39750132929) 在修订 `6a9037d` 上通过**：四个 `windows-latest` 任务分别使用 Python 3.11、3.12、3.13、3.14，均搭配 Node.js 22。每个任务均通过 48 项 Python 测试、16 项 Node 测试、PowerShell 语法解析和打包。该运行早于新增的 PowerShell 生命周期测试脚本；上面的 26 项结果属于本地证据。上方徽章链接当前工作流运行。
+**[GitHub Actions 运行 39750132929](https://github.com/LocusQiang/fxxk-u-tibo/actions/runs/39750132929) 在修订 `6a9037d` 上通过**：四个 `windows-latest` 任务分别使用 Python 3.11、3.12、3.13、3.14，均搭配 Node.js 22。每个任务均通过 48 项 Python 测试、16 项 Node 测试、PowerShell 语法解析和打包。该运行早于新增的 PowerShell 生命周期测试脚本；上面的 26 项结果属于本地证据。上方徽章链接当前工作流运行。
 
 公开版尚**未验证**真实发送、真实锁屏/解锁、计划任务注册和重启恢复。托管环境的模拟测试不代表另一台电脑上的真实 Codex 行为。实测数值与证据范围见[验证记录](docs/compatibility.md#release-validation-record)。
 
 ## 贡献与许可
 
-项目地址：[LocusQiang/codex-auto-retry-kitchen](https://github.com/LocusQiang/codex-auto-retry-kitchen)。提交问题、诊断信息或改动前，请阅读[贡献指南](CONTRIBUTING.md)。
+项目地址：[LocusQiang/fxxk-u-tibo](https://github.com/LocusQiang/fxxk-u-tibo)。提交问题、诊断信息或改动前，请阅读[贡献指南](CONTRIBUTING.md)。
 
 软件采用 [MIT 许可证](LICENSE)，copyright **2026 LocusQiang**。随附 AI 生成厨具图片在贡献者可许可的权利范围内按 MIT 提供，不声称 AI 生成内容具有独占版权。依赖保留各自的许可，详见[第三方声明](THIRD_PARTY_NOTICES.md)。

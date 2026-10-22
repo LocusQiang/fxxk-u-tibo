@@ -6,7 +6,7 @@ from pathlib import Path
 import zipfile
 
 ROOT = Path(__file__).resolve().parent
-VERSION = '0.1.0'
+VERSION = '0.1.1'
 FILES = '''
 .gitignore .gitattributes LICENSE README.md README.zh-CN.md CHANGELOG.md
 CONTRIBUTING.md SECURITY.md THIRD_PARTY_NOTICES.md requirements.txt
@@ -18,7 +18,7 @@ scripts/test-scripts.ps1
 test_monitor.py test_auto.py test_concurrency.py test_locking.py
 test_supervisor.py test_portability.py test_bridge.cjs test_release.py
 package_release.py
-docs/compatibility.md docs/kitchen-contact-sheet.png
+docs/compatibility.md docs/kitchen-contact-sheet.png docs/slogan-translations.md
 assets/kitchen/manifest.json assets/kitchen/PROVENANCE.json
 .github/workflows/test.yml .github/ISSUE_TEMPLATE/bug_report.yml
 .github/ISSUE_TEMPLATE/feature_request.yml .github/ISSUE_TEMPLATE/config.yml
@@ -49,7 +49,7 @@ def build(root=ROOT, destination=None):
     files = release_files(root)
     destination = Path(destination) if destination else root / 'dist'
     destination.mkdir(parents=True, exist_ok=True)
-    prefix = f'codex-auto-retry-kitchen-{VERSION}'
+    prefix = f'fxxk-u-tibo-{VERSION}'
     archive = destination / f'{prefix}-windows-source.zip'
     with zipfile.ZipFile(archive, 'w', compression=zipfile.ZIP_DEFLATED, compresslevel=9) as package:
         for path in files:

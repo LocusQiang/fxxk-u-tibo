@@ -282,7 +282,7 @@ class KitchenApp:
 
 def main():
     if sys.platform != 'win32':
-        raise SystemExit('Codex Auto Retry Kitchen requires Windows 10/11 and Codex Desktop.')
+        raise SystemExit('fxxk u tibo requires Windows 10/11 and Codex Desktop.')
     parser=argparse.ArgumentParser()
     parser.add_argument('--node',default='node')
     parser.add_argument('--demo',action='store_true')

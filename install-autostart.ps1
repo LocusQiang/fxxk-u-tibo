@@ -34,7 +34,7 @@ try {
     $registration = @{
         TaskName = $TaskName; TaskPath = "\"; Action = $action; Trigger = @($logon, $recovery)
         Settings = $settings; Principal = $principal; ErrorAction = "Stop"
-        Description = "Codex Auto Retry Kitchen: logon and one-minute recovery; respects stop.request."
+        Description = "fxxk u tibo: logon and one-minute recovery; respects stop.request."
     }
     $current = Get-RetryScheduledTask $TaskName
     if ($current) { Assert-RetryTaskOwnership $current; $registration.Force = $true }

@@ -1,10 +1,10 @@
 # Security policy
 
-Codex Auto Retry Kitchen is an unofficial local companion. Its ability to resume a Codex task is security-relevant even though it does not read credentials or upload chats.
+fxxk u tibo is an unofficial local companion. Its ability to resume a Codex task is security-relevant even though it does not read credentials or upload chats.
 
 ## Reporting a vulnerability
 
-**GitHub private vulnerability reporting is enabled for this repository.** Use the [private vulnerability report form](https://github.com/LocusQiang/codex-auto-retry-kitchen/security/advisories/new) for suspected security issues.
+**GitHub private vulnerability reporting is enabled for this repository.** Use the [private vulnerability report form](https://github.com/LocusQiang/fxxk-u-tibo/security/advisories/new) for suspected security issues.
 
 1. Open the private report form and sign in to GitHub if prompted.
 2. Include the affected version, impact, a minimal synthetic reproduction, and any proposed fix.
@@ -14,7 +14,7 @@ No separate security email address, guaranteed response time, or bounty program 
 
 ## Version scope
 
-The initial public release is v0.1.0. Completed checks and remaining validation gaps are recorded in [Compatibility](docs/compatibility.md#release-validation-record). Reports should identify the exact release or commit. No security maintenance commitment is made for the earlier personal prototype, unpublished local modifications, unsupported platforms, or unverified Codex builds.
+The current preview release is v0.1.1. It renames the project without changing the v0.1.0 retry behavior. Completed checks and remaining validation gaps are recorded in [Compatibility](docs/compatibility.md#release-validation-record). Reports should identify the exact release or commit. No security maintenance commitment is made for the earlier personal prototype, unpublished local modifications, unsupported platforms, or unverified Codex builds.
 
 A vulnerability in Codex itself belongs with its vendor's security reporting process; include this project only when its behavior is involved.
 

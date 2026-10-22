@@ -1,10 +1,16 @@
-# Codex Auto Retry Kitchen
+# fxxk u tibo
+
+**Codex auto retry for Windows, with flying kitchen utensils.**
+
+> fxxk u tibo，no more Selected model is at capacity. Please try a different model.
+
+[Read the slogan in 60 language versions](docs/slogan-translations.md) · Previously named **Codex Auto Retry Kitchen**.
 
 [简体中文](README.zh-CN.md) · [Compatibility](docs/compatibility.md) · [Changelog](CHANGELOG.md) · [Security](SECURITY.md)
 
-[![Windows tests](https://github.com/LocusQiang/codex-auto-retry-kitchen/actions/workflows/test.yml/badge.svg)](https://github.com/LocusQiang/codex-auto-retry-kitchen/actions/workflows/test.yml)
+[![Windows tests](https://github.com/LocusQiang/fxxk-u-tibo/actions/workflows/test.yml/badge.svg)](https://github.com/LocusQiang/fxxk-u-tibo/actions/workflows/test.yml)
 
-**[Download v0.1.0 — Windows preview](https://github.com/LocusQiang/codex-auto-retry-kitchen/releases/tag/v0.1.0)** · Source ZIP; Python and Node.js are installed separately.
+**[Download v0.1.1 — Windows preview](https://github.com/LocusQiang/fxxk-u-tibo/releases/tag/v0.1.1)** · Source ZIP; Python and Node.js are installed separately.
 
 An unofficial Windows companion for the **Codex desktop app**. When a conversation stops with a verified service-unavailable, HTTP 503, server-overload, or model-capacity error, it sends the literal Chinese message **`继续`** to that same conversation. A cute AI-generated kitchen utensil flies across the screen, accompanied by a stationary, one-second notification. There is no voice output.
 
@@ -16,10 +22,10 @@ This project is independent of OpenAI and is not an official or supported Codex 
 
 **Starting the watcher authorizes automatic continuation in the conversations it detects. Read these defaults before your first Start:**
 
-- It monitors local user conversations in the configured Codex home, **excluding archived and subagent conversations**. It is not limited to the currently visible chat. v0.1.0 has no switch to include archived conversations.
+- It monitors local user conversations in the configured Codex home, **excluding archived and subagent conversations**. It is not limited to the currently visible chat. v0.1.x has no switch to include archived conversations.
 - **The first normal Start establishes a persistent baseline and skips failures already present at that time.** Automatic recovery applies only to new qualifying failures that appear afterward. Setup and Preview do not start monitoring. To resume an existing failed task, open that conversation and manually send `继续` once.
 - A continuation can consume Codex usage or quota and resume tools or other actions from the original task. It inherits that conversation's permissions and settings. It does **not** bypass approvals or grant extra permissions.
-- The sent text is always **`继续`** (meaning “continue”), including with English UI selected. It is not the English text `Continue` and is not configurable in v0.1.0.
+- The sent text is always **`继续`** (meaning “continue”), including with English UI selected. It is not the English text `Continue` and is not configurable in v0.1.x.
 - A failure already handled, or a send whose outcome is unknown, is not automatically sent again. Unknown runtime state or incompatible history structure blocks the submission. Sends to the same chat are spaced at least **30 seconds** apart. A later, distinct qualifying failure in that chat can trigger another continuation.
 - While Windows is locked, retries continue if the desktop app and local session remain available. Visual notifications are discarded and are not replayed after unlock. The tool cannot run while the PC is asleep or shut down.
 
@@ -152,12 +158,12 @@ The maintainer supplied a **single-machine local desktop baseline**: Windows 11 
 
 For the v0.1.0 candidate, the maintainer reports **48 Python tests, 16 Node tests, and 26 Windows PowerShell 5.1 checks passing locally**. Installation passed both in the public checkout and from a fresh allowlisted ZIP extracted under a nested path containing Chinese characters and spaces; package Demo launch also passed. English and Chinese visual smoke checks passed. Read-only Doctor connection and actual idle-snapshot parsing checks passed, with **zero real continuation messages sent**.
 
-**[GitHub Actions run 39750132929](https://github.com/LocusQiang/codex-auto-retry-kitchen/actions/runs/39750132929) passed at revision `6a9037d`** across all four `windows-latest` jobs: Python 3.11, 3.12, 3.13, and 3.14 with Node.js 22. Each job passed 48 Python tests, 16 Node tests, PowerShell parsing, and package construction. That run predates the added PowerShell lifecycle test script; its 26-check result above is local evidence. The badge links to current workflow runs.
+**[GitHub Actions run 39750132929](https://github.com/LocusQiang/fxxk-u-tibo/actions/runs/39750132929) passed at revision `6a9037d`** across all four `windows-latest` jobs: Python 3.11, 3.12, 3.13, and 3.14 with Node.js 22. Each job passed 48 Python tests, 16 Node tests, PowerShell parsing, and package construction. That run predates the added PowerShell lifecycle test script; its 26-check result above is local evidence. The badge links to current workflow runs.
 
 Real sending, real lock/unlock behavior, scheduled-task registration, and reboot recovery have **not** been validated for the public build. Hosted synthetic tests do not establish real Codex behavior on a second computer. See [the validation record](docs/compatibility.md#release-validation-record) for measured results and scope.
 
 ## Contributing and license
 
-Issues and contributions belong at [LocusQiang/codex-auto-retry-kitchen](https://github.com/LocusQiang/codex-auto-retry-kitchen). Read [Contributing](CONTRIBUTING.md) before sharing diagnostics or proposing changes.
+Issues and contributions belong at [LocusQiang/fxxk-u-tibo](https://github.com/LocusQiang/fxxk-u-tibo). Read [Contributing](CONTRIBUTING.md) before sharing diagnostics or proposing changes.
 
 The software is licensed under the [MIT License](LICENSE), copyright **2026 LocusQiang**. Bundled AI-generated kitchen images are offered under MIT to the extent the contributors have rights they can license; no exclusive copyright in AI-generated output is claimed. Dependency licenses remain separate. See [Third-party notices](THIRD_PARTY_NOTICES.md).

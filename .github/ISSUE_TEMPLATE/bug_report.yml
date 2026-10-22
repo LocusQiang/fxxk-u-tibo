@@ -1,12 +1,12 @@
 name: Bug report
-description: Report a reproducible, non-sensitive problem with Codex Auto Retry Kitchen.
+description: Report a reproducible, non-sensitive problem with fxxk u tibo.
 title: "[Bug]: "
 body:
   - type: markdown
     attributes:
       value: |
         Read the README, docs/compatibility.md, and SECURITY.md first.
-        Private vulnerability reporting is enabled. For suspected vulnerabilities, follow SECURITY.md and use https://github.com/LocusQiang/codex-auto-retry-kitchen/security/advisories/new instead of this public form.
+        Private vulnerability reporting is enabled. For suspected vulnerabilities, follow SECURITY.md and use https://github.com/LocusQiang/fxxk-u-tibo/security/advisories/new instead of this public form.
         Do not upload raw logs, runtime folders, databases, credentials, real conversation/turn/message IDs, personal paths, or private-chat screenshots. Use synthetic examples.
   - type: checkboxes
     id: preflight
@@ -21,7 +21,7 @@ body:
     id: project-version
     attributes:
       label: Project version or commit
-      placeholder: "v0.1.0 or a commit hash"
+      placeholder: "v0.1.1 or a commit hash"
     validations:
       required: true
   - type: textarea
