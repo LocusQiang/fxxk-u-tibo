@@ -1,0 +1,50 @@
+name: Feature request
+description: Suggest a focused improvement to Codex Auto Retry Kitchen.
+title: "[Feature]: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Describe the user problem and the smallest useful improvement. English and Simplified Chinese are welcome.
+        Do not include private conversations, real identifiers, personal paths, credentials, or raw runtime data.
+        For vulnerabilities, follow SECURITY.md instead of this public form.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or need
+      description: Who encounters this problem, under what conditions, and what is the impact?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behavior
+      description: Describe what the user should be able to do and the expected result.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Current workaround or alternatives
+      description: Explain what you do today and why the existing behavior is insufficient.
+  - type: textarea
+    id: boundaries
+    attributes:
+      label: Scope and safety impact
+      description: Note any changes to first-start baseline, archived-chat exclusion, submission checks, permissions, privacy, usage costs, or autostart. New sending behavior needs an explicit rationale.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: How would we know this works?
+      description: Suggest a concrete result and a synthetic test or safe manual check. Distinguish intended compatibility from actual machine results.
+    validations:
+      required: true
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: Public report
+      options:
+        - label: This request contains no private data or sensitive vulnerability details.
+          required: true

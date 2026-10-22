@@ -1,0 +1,80 @@
+name: Bug report
+description: Report a reproducible, non-sensitive problem with Codex Auto Retry Kitchen.
+title: "[Bug]: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Read the README, docs/compatibility.md, and SECURITY.md first.
+        Private vulnerability reporting is enabled. For suspected vulnerabilities, follow SECURITY.md and use https://github.com/LocusQiang/codex-auto-retry-kitchen/security/advisories/new instead of this public form.
+        Do not upload raw logs, runtime folders, databases, credentials, real conversation/turn/message IDs, personal paths, or private-chat screenshots. Use synthetic examples.
+  - type: checkboxes
+    id: preflight
+    attributes:
+      label: Before submitting
+      options:
+        - label: I checked the documented compatibility and public-release defaults, including first-start baseline and archived-chat exclusion.
+          required: true
+        - label: This report contains no private data and does not disclose a suspected vulnerability publicly.
+          required: true
+  - type: input
+    id: project-version
+    attributes:
+      label: Project version or commit
+      placeholder: "v0.1.0 or a commit hash"
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: List versions only; omit usernames, machine names, identifiers, and local paths.
+      placeholder: |
+        Windows version and architecture:
+        Codex desktop version:
+        Python version:
+        Node.js version:
+        Pillow version:
+        UI language:
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction steps
+      description: Prefer a minimal synthetic case. State whether this was first Start or a later run, and whether the failure existed before the baseline.
+      placeholder: |
+        1. Start with ...
+        2. Trigger ...
+        3. Observe ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected-actual
+    attributes:
+      label: Expected and actual behavior
+      description: Include whether the conversation was archived and whether Windows was locked, if relevant. Do not include a real chat title or ID.
+    validations:
+      required: true
+  - type: dropdown
+    id: evidence
+    attributes:
+      label: Where did you observe this?
+      options:
+        - Static inspection only
+        - Automated test with synthetic data
+        - Doctor capability check
+        - Visual Preview only
+        - Real Codex desktop run
+    validations:
+      required: true
+  - type: textarea
+    id: diagnostic-summary
+    attributes:
+      label: Sanitized diagnostic summary
+      description: Summarize Doctor check names/statuses or a minimal synthetic error. Do not paste full Doctor output or raw logs; they may contain private paths or identifiers.
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional context
+      description: Note relevant upgrades or timing. If you tried another computer, identify it only by non-identifying environment differences; a repeat on the same PC is not another-machine validation.

@@ -1,0 +1,21 @@
+# Runtime data and installed dependencies must never be published.
+.runtime/
+.venv/
+__pycache__/
+*.py[cod]
+*.log
+*.log.*
+*.pid
+*.sqlite*
+*.jsonl
+runtime.json
+stop.request
+kitchen-order.json
+autostart-*.json
+autostart-task.xml
+dist/
+verification/
+*-test-*/
+concurrency-*/
+.env*
+node_modules/

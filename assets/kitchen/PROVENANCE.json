@@ -1,0 +1,146 @@
+{
+  "origin": "28 original cartoon kitchen sprites generated with OpenAI image generation for this project on 2026-10-21. Resized onto 640x640 transparent canvases.",
+  "license": "MIT, to the extent the contributor can license these AI-generated images; no exclusive copyright claim.",
+  "assets": [
+    {
+      "id": "frying-pan",
+      "file": "sprites/frying-pan.png",
+      "sha256": "751bfead939d1a6120e64b3f1d4ad96703e0e91acd5f7fa54401d379ecbe767f"
+    },
+    {
+      "id": "pan",
+      "file": "sprites/pan.png",
+      "sha256": "e1c63f2ff0a49a88819ffdf391368905a0903b4713df903ddbc8014d4c639895"
+    },
+    {
+      "id": "pot",
+      "file": "sprites/pot.png",
+      "sha256": "b315b5ba558e6831b951fe9df4977fbb50f4d7439a83b1a57263990397674e43"
+    },
+    {
+      "id": "pot-lid",
+      "file": "sprites/pot-lid.png",
+      "sha256": "2cfe6538aba8560c523b13015dedda16e078959ea1f944342e45c1f4bc990f70"
+    },
+    {
+      "id": "tajine",
+      "file": "sprites/tajine.png",
+      "sha256": "750c4474a7c3d5cae446cf02aac2e022e273b8b887303b1d75bc0e6556c9420b"
+    },
+    {
+      "id": "steamer",
+      "file": "sprites/steamer.png",
+      "sha256": "a632aaeeed881a786209ab759dbc0790e1c82458e105021599062fa57f0cbc75"
+    },
+    {
+      "id": "cooking-spatula",
+      "file": "sprites/cooking-spatula.png",
+      "sha256": "4d850760720ee97ec82a52f0622e14989804fe98dde2ecdbd9eff42a3fcf5e27"
+    },
+    {
+      "id": "cooking-spoon",
+      "file": "sprites/cooking-spoon.png",
+      "sha256": "a7e770662e8b40fd03d3ca29ede18460e2df0e7e527c78c58bb94fa9b235dd92"
+    },
+    {
+      "id": "cooking-fork",
+      "file": "sprites/cooking-fork.png",
+      "sha256": "2240ef7eeede89d287b4c3c9794dc63db374bcfb8e1a25defe2b9d57fac2c9e0"
+    },
+    {
+      "id": "cooking-knife",
+      "file": "sprites/cooking-knife.png",
+      "sha256": "8af9518c48ada7ddc786398200a178d533e467d1de6306dd68a02ec9aa98d206"
+    },
+    {
+      "id": "cooking-knife-chopping",
+      "file": "sprites/cooking-knife-chopping.png",
+      "sha256": "10b8c1c4066242d21748fca7cefc57740a8088f03d40ceaeca42b30b88c59959"
+    },
+    {
+      "id": "whisk",
+      "file": "sprites/whisk.png",
+      "sha256": "7c9f0604e36ebab4787b6dc78d7130d28c5ae699d727183f2ac8220558e05497"
+    },
+    {
+      "id": "rollingPin",
+      "file": "sprites/rollingPin.png",
+      "sha256": "30ea1cb882324d3f67d4f3bd41fa7d1774996c0653f1a82963667cd6ae5b7196"
+    },
+    {
+      "id": "meat-tenderizer",
+      "file": "sprites/meat-tenderizer.png",
+      "sha256": "bd16d96056c2b8b67d655a2ec57621d8330003f4272795f77a681dee32266684"
+    },
+    {
+      "id": "pizza-cutter",
+      "file": "sprites/pizza-cutter.png",
+      "sha256": "f17fdbe0231b22c43a4c5af6888af8050bb9daa1de3b57878a3d114a29525d49"
+    },
+    {
+      "id": "cheese-slicer",
+      "file": "sprites/cheese-slicer.png",
+      "sha256": "99470a6d17188412c057171f747abd6d2a1ca87234f88bb6252f888d4e247bb0"
+    },
+    {
+      "id": "cake-slicer",
+      "file": "sprites/cake-slicer.png",
+      "sha256": "4775babfc38b3e9a7f6af71c00e9823638646753f4cbae1a7773c90893b753a4"
+    },
+    {
+      "id": "cutting-board",
+      "file": "sprites/cutting-board.png",
+      "sha256": "d2a69761f6165c1899be151570baa3fd75c83a44e72b392ed7bfd37f4c9ade9d"
+    },
+    {
+      "id": "cutting-board-round",
+      "file": "sprites/cutting-board-round.png",
+      "sha256": "23223e600be83e8f43656b40413f36d16aa6149486c984a7ce1f77319ff5ff38"
+    },
+    {
+      "id": "mortar",
+      "file": "sprites/mortar.png",
+      "sha256": "d4dd15a2352bba82a8fc874a8f36801d63a5d1bea2cbae329d18eaf3e4d2fdd6"
+    },
+    {
+      "id": "mortar-pestle",
+      "file": "sprites/mortar-pestle.png",
+      "sha256": "e39cf0549da421fb6d157374d0df6e026afbb69ee3b4bde83467ccc0491892dd"
+    },
+    {
+      "id": "pepper-mill",
+      "file": "sprites/pepper-mill.png",
+      "sha256": "4ee8df7cf65ff9e7734b1b024d88d55731e65727d08de3dac1034a093caf4e5c"
+    },
+    {
+      "id": "knife-block",
+      "file": "sprites/knife-block.png",
+      "sha256": "2e577e2f034e8c82715f3425dc55a220c0d55125ee1dd3c44fad9ea3c00ca641"
+    },
+    {
+      "id": "utensil-fork",
+      "file": "sprites/utensil-fork.png",
+      "sha256": "fe0c7030a096cf3854810c91b44388b4a7a76d16078e97f33f706309066bd8d5"
+    },
+    {
+      "id": "utensil-knife",
+      "file": "sprites/utensil-knife.png",
+      "sha256": "bdaa7e8ab5f76a4404406c14b3103f69513fa4e7c8b666d00a94f1a2824fac5b"
+    },
+    {
+      "id": "utensil-spoon",
+      "file": "sprites/utensil-spoon.png",
+      "sha256": "3d352b478fb763413ed477c3529750860bc5e83595b9a3146d2c495b89a91f37"
+    },
+    {
+      "id": "bowl",
+      "file": "sprites/bowl.png",
+      "sha256": "1eceaf313a8cf30b3c01e3e850dbb76ab1ae85b524ddcf6e7dddc1ce7b43b366"
+    },
+    {
+      "id": "plate",
+      "file": "sprites/plate.png",
+      "sha256": "ffb940bc5e24b0948eba6e95c3d9ce62656ceb7ce56ae2a0186f05201491a8eb"
+    }
+  ]
+}

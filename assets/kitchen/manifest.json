@@ -1,0 +1,142 @@
+[
+  {
+    "id": "frying-pan",
+    "name": "平底煎锅",
+    "file": "sprites/frying-pan.png"
+  },
+  {
+    "id": "pan",
+    "name": "双耳炖锅",
+    "file": "sprites/pan.png"
+  },
+  {
+    "id": "pot",
+    "name": "深汤锅",
+    "file": "sprites/pot.png"
+  },
+  {
+    "id": "pot-lid",
+    "name": "锅盖",
+    "file": "sprites/pot-lid.png"
+  },
+  {
+    "id": "tajine",
+    "name": "陶制浅锅",
+    "file": "sprites/tajine.png"
+  },
+  {
+    "id": "steamer",
+    "name": "竹蒸笼",
+    "file": "sprites/steamer.png"
+  },
+  {
+    "id": "cooking-spatula",
+    "name": "锅铲",
+    "file": "sprites/cooking-spatula.png"
+  },
+  {
+    "id": "cooking-spoon",
+    "name": "料理勺",
+    "file": "sprites/cooking-spoon.png"
+  },
+  {
+    "id": "cooking-fork",
+    "name": "料理叉",
+    "file": "sprites/cooking-fork.png"
+  },
+  {
+    "id": "cooking-knife",
+    "name": "主厨刀",
+    "file": "sprites/cooking-knife.png"
+  },
+  {
+    "id": "cooking-knife-chopping",
+    "name": "中式菜刀",
+    "file": "sprites/cooking-knife-chopping.png"
+  },
+  {
+    "id": "whisk",
+    "name": "打蛋器",
+    "file": "sprites/whisk.png"
+  },
+  {
+    "id": "rollingPin",
+    "name": "擀面杖",
+    "file": "sprites/rollingPin.png"
+  },
+  {
+    "id": "meat-tenderizer",
+    "name": "松肉锤",
+    "file": "sprites/meat-tenderizer.png"
+  },
+  {
+    "id": "pizza-cutter",
+    "name": "披萨滚刀",
+    "file": "sprites/pizza-cutter.png"
+  },
+  {
+    "id": "cheese-slicer",
+    "name": "刨片刀",
+    "file": "sprites/cheese-slicer.png"
+  },
+  {
+    "id": "cake-slicer",
+    "name": "蛋糕铲",
+    "file": "sprites/cake-slicer.png"
+  },
+  {
+    "id": "cutting-board",
+    "name": "长方砧板",
+    "file": "sprites/cutting-board.png"
+  },
+  {
+    "id": "cutting-board-round",
+    "name": "圆形砧板",
+    "file": "sprites/cutting-board-round.png"
+  },
+  {
+    "id": "mortar",
+    "name": "研钵",
+    "file": "sprites/mortar.png"
+  },
+  {
+    "id": "mortar-pestle",
+    "name": "研杵",
+    "file": "sprites/mortar-pestle.png"
+  },
+  {
+    "id": "pepper-mill",
+    "name": "胡椒研磨器",
+    "file": "sprites/pepper-mill.png"
+  },
+  {
+    "id": "knife-block",
+    "name": "刀架",
+    "file": "sprites/knife-block.png"
+  },
+  {
+    "id": "utensil-fork",
+    "name": "餐叉",
+    "file": "sprites/utensil-fork.png"
+  },
+  {
+    "id": "utensil-knife",
+    "name": "餐刀",
+    "file": "sprites/utensil-knife.png"
+  },
+  {
+    "id": "utensil-spoon",
+    "name": "餐勺",
+    "file": "sprites/utensil-spoon.png"
+  },
+  {
+    "id": "bowl",
+    "name": "料理碗",
+    "file": "sprites/bowl.png"
+  },
+  {
+    "id": "plate",
+    "name": "餐盘",
+    "file": "sprites/plate.png"
+  }
+]
