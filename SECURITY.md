@@ -20,7 +20,7 @@ A vulnerability in Codex itself belongs with its vendor's security reporting pro
 
 ## Security-sensitive behavior
 
-- Starting the watcher permits automatic submission of the literal `继续` to eligible conversations. This can consume usage and resume tools or other actions under the original conversation's permissions. The tool must not bypass approval checks.
+- Starting the watcher permits automatic empty-input turns in eligible conversations. This can consume usage and resume tools or other actions under the original conversation's permissions. The tool must not bypass approval checks.
 - First normal Start persists a baseline and skips already-present failures. Archived and subagent conversations are excluded, with no public archived-conversation switch. Existing failed tasks can be continued manually by the user.
 - Both state and history databases must be structurally compatible. Missing history is an error, and legacy rollout files cannot trigger automatic sends. Unknown runtime state or history structure blocks submission.
 - Confirmation requires a valid non-empty string identifying the newly created turn. Pending or unknown send outcomes must never be automatically resubmitted. The journal and baseline must survive restarts.

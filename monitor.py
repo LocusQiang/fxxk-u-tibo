@@ -175,7 +175,7 @@ class Sender:
         state = probe.get('state')
         if not isinstance(state, dict) or not isinstance(state.get('runtime'), dict):
             return False
-        if state['runtime'].get('type') not in ('idle', 'active'):
+        if state['runtime'].get('type') not in ('idle', 'active', 'systemError'):
             return False
         latest = state.get('latest')
         return (isinstance(latest, list) and all(isinstance(t, dict)
@@ -188,7 +188,7 @@ class Sender:
             return False
         state = probe['state']
         latest = (state['latest'] or [{}])[-1]
-        return (state.get('id') == failure.thread_id and state['runtime']['type'] == 'idle'
+        return (state.get('id') == failure.thread_id and state['runtime']['type'] in ('idle', 'systemError')
                 and latest.get('turnId') == failure.turn_id and latest.get('status') in ('failed', 'interrupted')
                 and is_unavailable(latest.get('error')))
 
@@ -233,7 +233,7 @@ class Sender:
                     and isinstance(result.get('turnId'), str) and result['turnId'].strip()
                     and result['turnId'] != failure.turn_id):
                 self.journal.record(failure, 'sent', message_id)
-                return 'sent', '已向该对话发送「继续」'
+                return 'sent', '已直接启动该对话的新轮次'
             if not result.get('submitted', True):
                 stale = 'STALE:' in result.get('error', '')
                 self.journal.record(failure, 'stale' if stale else 'retryable', message_id)

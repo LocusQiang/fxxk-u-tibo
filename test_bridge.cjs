@@ -25,7 +25,7 @@ async function rejectsBeforeSend(candidate) {
   assert.equal(bridge.submitted,undefined);
 }
 
-test('native pipe integration: fragmented frames, exact chat and literal message', async t => {
+test('native pipe integration: fragmented frames, exact chat and empty start input', async t => {
   const pipe = '\\\\.\\pipe\\codex-muyu-test-' + process.pid;
   const sent = [], sockets = new Set();
   const server = net.createServer(socket => {
@@ -67,7 +67,7 @@ test('native pipe integration: fragmented frames, exact chat and literal message
     assert.equal(sent.length,1);
     assert.equal(sent[0].targetClientId,'owner');
     assert.equal(sent[0].version,2);
-    assert.deepEqual(sent[0].params, {conversationId:'target-chat',turnStart:{request:{threadId:'target-chat',input:[{type:'text',text:'继续',text_elements:[]}],clientUserMessageId:'message-uuid'},context:{inheritThreadSettings:true}}});
+    assert.deepEqual(sent[0].params, {conversationId:'target-chat',turnStart:{request:{threadId:'target-chat',input:[],clientUserMessageId:'message-uuid'},context:{inheritThreadSettings:true}}});
   } finally {
     bridge.close();
     for (const socket of sockets) socket.destroy();
@@ -80,6 +80,7 @@ test('running, stale, wrong chat, cancelled, or unrelated errors never send', as
   const cases = [
     {...state,id:'wrong-chat'},
     {...state,threadRuntimeStatus:{type:'active'}},
+    {...state,threadRuntimeStatus:{type:'systemError'},turns:[{turnId:'failed-turn',status:'completed',error}]},
     {...state,turns:[{turnId:'new-turn',status:'failed',error}]},
     {...state,turns:[{turnId:'failed-turn',status:'completed',error}]},
     {...state,turns:[{turnId:'failed-turn',status:'interrupted',error:null}]},
@@ -87,6 +88,16 @@ test('running, stale, wrong chat, cancelled, or unrelated errors never send', as
   ];
   for (const candidate of cases) await assert.rejects(continueIfFailed(bridge,'owner','target-chat','failed-turn','id',candidate), /STALE/);
   assert.equal(bridge.submitted,undefined);
+});
+
+test('systemError with the exact unavailable latest turn can send', async () => {
+  const candidate = {...state,threadRuntimeStatus:{type:'systemError'}};
+  let calls = 0;
+  const bridge = {request:async () => { calls++; return {result:{result:{turn:{id:'new-turn'}}}}; }};
+  const result = await continueIfFailed(bridge,'owner','target-chat','failed-turn','id',candidate);
+  assert.equal(result.sent,true);
+  assert.equal(result.turnId,'new-turn');
+  assert.equal(calls,1);
 });
 
 test('missing, malformed, and unknown runtime are UNSUPPORTED before submission', async () => {

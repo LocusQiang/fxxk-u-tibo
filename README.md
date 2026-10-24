@@ -28,7 +28,7 @@ The EXE stores private configuration and history in **.runtime next to the EXE**
 Read-only packaged diagnostics: run the EXE with **--doctor --connect** while Codex is open. The private report is written to .runtime/doctor.json; review and redact paths before sharing it.
 
 
-An unofficial Windows companion for the **Codex desktop app**. When a conversation stops with a verified service-unavailable, HTTP 503, server-overload, or model-capacity error, it sends the literal Chinese message **`继续`** to that same conversation. A cute AI-generated kitchen utensil flies across the screen, accompanied by a stationary, one-second notification. There is no voice output.
+An unofficial Windows companion for the **Codex desktop app**. When a conversation stops with a verified service-unavailable, HTTP 503, server-overload, or model-capacity error, it directly starts a new turn in that same conversation without adding a visible user message. A cute AI-generated kitchen utensil flies across the screen, accompanied by a stationary, one-second notification. There is no voice output.
 
 This project is independent of OpenAI and is not an official or supported Codex integration. It depends on undocumented desktop interfaces that can change without notice.
 
@@ -41,8 +41,8 @@ This project is independent of OpenAI and is not an official or supported Codex 
 - It monitors local user conversations in the configured Codex home, **excluding archived and subagent conversations**. It is not limited to the currently visible chat. v0.2.x has no switch to include archived conversations.
 - **The first normal Start establishes a persistent baseline and skips failures already present at that time.** Automatic recovery applies only to new qualifying failures that appear afterward. Setup and Preview do not start monitoring. To resume an existing failed task, open that conversation and manually send `继续` once.
 - A continuation can consume Codex usage or quota and resume tools or other actions from the original task. It inherits that conversation's permissions and settings. It does **not** bypass approvals or grant extra permissions.
-- The sent text is always **`继续`** (meaning “continue”), including with English UI selected. It is not the English text `Continue` and is not configurable in v0.2.x.
-- A failure already handled, or a send whose outcome is unknown, is not automatically sent again. Unknown runtime state or incompatible history structure blocks the submission. Sends to the same chat are spaced at least **30 seconds** apart. A later, distinct qualifying failure in that chat can trigger another continuation.
+- Eligible failures are resumed by starting a new turn with empty input; no visible user message is added. The original conversation settings and approval boundaries are inherited.
+- A failure already handled, or a send whose outcome is unknown, is not automatically sent again. Unknown runtime state or incompatible history structure blocks the submission; a desktop `systemError` state qualifies only when the exact latest turn is still a recognized service failure. Sends to the same chat are spaced at least **30 seconds** apart. A later, distinct qualifying failure in that chat can trigger another continuation.
 - While Windows is locked, retries continue if the desktop app and local session remain available. Visual notifications are discarded and are not replayed after unlock. The tool cannot run while the PC is asleep or shut down.
 
 Installation does not start the watcher or enable autostart. Use the explicit Start step only when these defaults suit the tasks in your Codex home.
@@ -80,7 +80,7 @@ Optional installer arguments:
 | Argument | Value | Purpose |
 | --- | --- | --- |
 | `-CodexHome` | Path to your Codex home | Select the local data directory to monitor. |
-| `-Language` | `auto`, `en`, or `zh` | Choose presentation language; the sent text stays `继续`. |
+| `-Language` | `auto`, `en`, or `zh` | Choose presentation language for the interface. |
 | `-Python` | Python executable | Select a Python 3.11–3.14 installation with `tkinter`. |
 
 For example, with **placeholder paths that you must replace**:
@@ -141,7 +141,7 @@ Removing autostart does not stop an already running watcher. Use `Stop.vbs` as w
 
 ## What counts as a retry
 
-The watcher reads local conversation metadata and structured failures from the required databases. Before sending, it checks the exact conversation and latest failed turn against the live desktop state. Active conversations, unknown runtime states, changed or recovered turns, and failures outside the recognized service-unavailable/503/overload/capacity patterns do not qualify. Missing or incompatible history structure blocks sending; there is no legacy rollout-file fallback for automatic sends. This is not a retry mechanism for every error, authentication problem, approval request, or network disconnect.
+The watcher reads local conversation metadata and structured failures from the required databases. Before sending, it checks the exact conversation and latest failed turn against the live desktop state. Active conversations, unknown runtime states, changed or recovered turns, and failures outside the recognized service-unavailable/503/overload/capacity patterns do not qualify; a `systemError` state still has to pass the same exact latest-failure checks. Missing or incompatible history structure blocks sending; there is no legacy rollout-file fallback for automatic sends. This is not a retry mechanism for every error, authentication problem, approval request, or network disconnect.
 
 Each submission is recorded locally before sending. Confirmed sends, pending submissions, unknown outcomes, and the first-start baseline are persisted across restarts. If the outcome is unknown, inspect the conversation yourself; automatic resubmission is prohibited. Do not delete or reset the runtime state to force a retry: the baseline and journal are part of the protection against unintended or duplicate continuation.
 
@@ -151,7 +151,7 @@ A confirmed send requires a valid, non-empty string identifier for the newly cre
 
 - Codex's local databases are opened read-only. The public release requires compatible state and history databases and does not use legacy session files as an automatic-send fallback. The tool does not read `auth.json`.
 - Runtime configuration, logs, the first-start baseline, the send journal, counters, and process state default to **`.runtime/` inside the project folder**. Treat this directory as private: it can contain conversation identifiers, titles, local paths, and operational details.
-- The tool does not upload chats or collect analytics. Sending `继续` asks the Codex app to resume a conversation through its normal service; Codex's own network activity and data handling still apply. Dependency installation downloads packages.
+- The tool does not upload chats or collect analytics. Starting an empty turn asks the Codex app to resume a conversation through its normal service; Codex's own network activity and data handling still apply. Dependency installation downloads packages.
 - Runtime data is ignored by Git. Release packages must use an explicit file allowlist and exclude runtime data, local environments, and private diagnostics. Do not create a release by zipping a working folder wholesale. Packaging verification is recorded separately in [Compatibility](docs/compatibility.md#release-validation-record).
 
 Use synthetic examples for public issues and pull requests. Do not upload raw runtime files, session databases, authentication data, real conversation IDs, personal paths, or screenshots of private chats. See [Security](SECURITY.md) for private reporting.

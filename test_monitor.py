@@ -94,8 +94,8 @@ class MonitorTests(unittest.TestCase):
         sender = Sender(self.scanner, journal, invoke=invoke)
         return sender, journal, failure
 
-    def probe(self, active=False):
-        return {'ok': True, 'state': {'id': 'actual-chat', 'runtime': {'type': 'active' if active else 'idle'}, 'latest': [{'turnId': 'failed-turn', 'status': 'failed', 'error': ERR}]}}
+    def probe(self, active=False, runtime=None):
+        return {'ok': True, 'state': {'id': 'actual-chat', 'runtime': {'type': runtime or ('active' if active else 'idle')}, 'latest': [{'turnId': 'failed-turn', 'status': 'failed', 'error': ERR}]}}
 
     def test_click_routes_exact_id_and_survives_restart_without_duplicate(self):
         calls = []
@@ -120,6 +120,17 @@ class MonitorTests(unittest.TestCase):
         sender, journal, failure = self.prepare_sender(invoke)
         self.assertEqual(sender.send(failure)[0], 'stale')
         self.assertEqual(len(calls), 1)
+
+    def test_system_error_state_can_send_exact_unavailable_failure(self):
+        calls = []
+        def invoke(*args):
+            calls.append(args)
+            return self.probe(runtime='systemError') if args[0] == '--probe' else {
+                'ok': True, 'sent': True, 'threadId': args[1],
+                'clientUserMessageId': args[3], 'turnId': 'new-turn'}
+        sender, journal, failure = self.prepare_sender(invoke)
+        self.assertEqual(sender.send(failure)[0], 'sent')
+        self.assertEqual(calls[1][:3], ('--continue', 'actual-chat', 'failed-turn'))
 
     def test_timeout_is_unknown_and_not_retried(self):
         calls = []

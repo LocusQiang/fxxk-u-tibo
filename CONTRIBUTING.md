@@ -31,7 +31,7 @@ Only run a live sending test when the operator explicitly intends to resume the 
 - Both `state_5.sqlite` and `thread_history_1.sqlite` must have compatible structures. Missing history must be a Doctor error. Legacy rollout files must not provide an automatic-send fallback.
 - Sending requires the exact current failed turn, a recognized idle runtime state, and a qualifying structured service failure. Unknown runtime or history structures block submission. A new turn must be confirmed by a valid non-empty string identifier; unknown send outcomes must not be automatically resubmitted.
 - Keep durable duplicate protection and the minimum 30-second per-chat interval. Do not delete private runtime state to make a test pass.
-- Send exactly `继续`, inherit conversation settings, and preserve approval boundaries. UI language must not change the sent message.
+- Start the eligible conversation with an empty input array, inherit conversation settings, and preserve approval boundaries. No visible user message is added.
 - Locked desktops discard visuals without replay; background retries can continue. A manual Stop must be respected until explicit Start or the next reboot. Autostart remains opt-in.
 - Do not read `auth.json`, upload chats, add analytics, or include private runtime data in a release.
 
