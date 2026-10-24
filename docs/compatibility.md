@@ -55,9 +55,9 @@ IPC means inter-process communication between the local bridge and the Codex des
 | Interface | Expected form | On mismatch or uncertainty |
 | --- | --- | --- |
 | Desktop snapshot | Version 11 snapshot for the exact conversation | Do not submit from missing, stale, or unrecognized state. |
-| Runtime state | Recognized idle state for the conversation being resumed | Active or unknown state blocks the submission. |
+| Runtime state | Recognized idle or `systemError` state for the conversation being resumed; `systemError` still requires an exact latest service failure | Active or unknown state blocks the submission. |
 | Desktop history | Recognized turn-history structure identifying the latest failed turn | Unknown history structure blocks the submission. |
-| Start-turn request | Version 2; inherits conversation settings; input is exactly `继续` | No alternate text or permission override. |
+| Start-turn request | Version 2; inherits conversation settings; input is an empty array | No user message text or permission override is added. |
 | Send acknowledgement | Valid non-empty string identifying the newly created turn | Missing, malformed, or ambiguous confirmation is an unknown outcome; never automatically resend it. |
 | State database | `state_5.sqlite` with compatible conversation metadata and archive information | Missing or incompatible structure is an error; do not guess eligibility. |
 | History database | `thread_history_1.sqlite` with compatible latest-turn status/error data | Required. Missing history is a Doctor error, and incompatible history blocks sending. |

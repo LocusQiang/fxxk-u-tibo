@@ -2,6 +2,11 @@
 
 Changes to fxxk u tibo are recorded here. Release entries describe behavior; they are not test reports.
 
+## Unreleased — retry service failures reported as `systemError`
+
+- Start a new turn without adding a visible `继续` user message when the latest turn is still the exact recognized service-capacity, overload, 503, or unavailable failure, including snapshots whose runtime is `systemError`.
+- Keep active, unknown, malformed, completed, and unrelated-error states blocked; existing durable deduplication and backoff rules remain in effect.
+
 ## v0.2.0 — daily statistics and standalone Windows EXE
 
 - Add a persistent kitchen system-tray icon. Click it or a retry toast to open daily statistics; closing statistics leaves monitoring running.

@@ -1,5 +1,5 @@
 'use strict';
-// Read-only by default. Only --continue submits the literal user message.
+// Read-only by default. Only --continue starts a new turn.
 const net = require('node:net');
 const crypto = require('node:crypto');
 const PIPE = String.raw`\\.\pipe\codex-ipc`;
@@ -132,7 +132,7 @@ function turnsFromState(state) {
 }
 function runtimeType(state) {
   if (!isObject(state) || !isId(state.id) || !isObject(state.threadRuntimeStatus) ||
-      !['idle', 'active'].includes(state.threadRuntimeStatus.type)) unsupported('missing or unknown runtime state');
+      !['idle', 'active', 'systemError'].includes(state.threadRuntimeStatus.type)) unsupported('missing or unknown runtime state');
   return state.threadRuntimeStatus.type;
 }
 function summarize(state) {
@@ -170,13 +170,13 @@ async function continueIfFailed(bridge, owner, threadId, expectedTurnId, message
   if (![owner, threadId, expectedTurnId, messageId].every(isId)) unsupported('invalid submission identifiers');
   const runtime = runtimeType(state);
   const turns = turnsFromState(state), latest = turns.at(-1);
-  if (state.id !== threadId || runtime !== 'idle' || latest?.turnId !== expectedTurnId ||
+  if (state.id !== threadId || !['idle', 'systemError'].includes(runtime) || latest?.turnId !== expectedTurnId ||
       !['failed','interrupted'].includes(latest?.status) || !isUnavailable(latest.error)) {
     throw new Error('STALE: conversation changed, is running, or no longer has the expected service error');
   }
   bridge.submitted = true;
   const response = await bridge.request('thread-follower-start-turn', {conversationId:threadId, turnStart:{
-    request:{threadId, input:[{type:'text', text:'继续', text_elements:[]}], clientUserMessageId:messageId},
+    request:{threadId, input:[], clientUserMessageId:messageId},
     context:{inheritThreadSettings:true}}}, 2, owner, 30000);
   const newTurnId = response?.result?.result?.turn?.id;
   if (!isId(newTurnId) || newTurnId === expectedTurnId) {

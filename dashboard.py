@@ -74,7 +74,7 @@ class Dashboard:
         self.chart.pack(fill='x', padx=30, pady=(4, 5))
         self.chart.bind('<Configure>', lambda event: self.draw_chart() if hasattr(self, 'report') else None)
         self.label(root, tr('Green: confirmed sends  ·  Amber: unconfirmed  ·  Local calendar dates',
-                            '绿色：已确认发送   ·   橙色：待确认   ·   按本机日期统计'), 10, color=MUTED).pack(anchor='w', padx=30)
+                            '绿色：已确认启动   ·   橙色：待确认   ·   按本机日期统计'), 10, color=MUTED).pack(anchor='w', padx=30)
         table = tk.Frame(root, bg=BG)
         table.pack(fill='both', expand=True, padx=30, pady=(12, 8))
         self.table = ttk.Treeview(table, columns=('day', 'sent', 'unknown', 'chats'), show='headings', height=3)
@@ -95,8 +95,8 @@ class Dashboard:
         self.button(controls, tr('Preview', '预览动画'), lambda: spawn('--preview')).pack(side='left')
         self.button(controls, tr('Logon startup…', '开机自启动…'), self.autostart).pack(side='right')
         self.button(controls, tr('Codex folder…', 'Codex 目录…'), self.configure).pack(side='right', padx=6)
-        self.label(root, tr('Counts confirm continuation was sent, not that the task succeeded. Closing this window keeps retries running.',
-                            '次数代表“继续”已确认发送，不代表任务成功。关闭统计窗口不会停止重试。'), 10, color=MUTED).pack(anchor='w', padx=30, pady=(0, 14))
+        self.label(root, tr('Counts confirm a new turn started, not that the task succeeded. Closing this window keeps retries running.',
+                            '次数代表新轮次已确认启动，不代表任务成功。关闭统计窗口不会停止重试。'), 10, color=MUTED).pack(anchor='w', padx=30, pady=(0, 14))
         root.protocol('WM_DELETE_WINDOW', self.close)
         self.refresh()
 
